@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package co.edu.icesi.services;
+package co.edu.icesi.invisiblefriend.services;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

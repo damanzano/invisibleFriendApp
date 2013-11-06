@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="invisibleFriendAppPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>co.edu.icesi.invisiblefriend.entities.Participantes</class>
+    <class>co.edu.icesi.invisiblefriend.entities.Personas</class>
+    <class>co.edu.icesi.invisiblefriend.entities.EsAmigoDe</class>
+    <class>co.edu.icesi.invisiblefriend.entities.Juego</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@172.16.0.103:1522:ESTUD"/>
+      <property name="javax.persistence.jdbc.password" value="dragoones"/>
+      <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
+      <property name="javax.persistence.jdbc.user" value="jlozano"/>
+    </properties>
+  </persistence-unit>
+</persistence>
