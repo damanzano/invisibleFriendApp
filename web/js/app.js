@@ -11,5 +11,12 @@ app.config(['$routeProvider', function($routeProvider) {
                 controller: 'juegosController',
                 templateUrl: 'views/juegos/juegos.html'
             })
+            .when('/participantes/:juegoId',{
+                controller: 'participantesController',
+                templateUrl: 'views/juegos/juego.html'
+            }).when('/personas',{
+                controller: 'personasController',
+                templateUrl: 'views/juegos/juegos.html'
+            })
             .otherwise({redirectTo: '/'});
 }]);
