@@ -26,7 +26,7 @@ import javax.ws.rs.core.Response;
  *
  * @author David Andrés Maznzano Herrera <damanzano>
  */
-@Path("juego")
+@Path("juegos")
 public class JuegoRESTFacade {
     private EntityManagerFactory getEntityManagerFactory() throws NamingException {
         //return (EntityManagerFactory) new InitialContext().lookup("java:comp/env/persistence-factory");
