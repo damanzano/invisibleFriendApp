@@ -9,7 +9,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" > <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" ng-app="invisibleFriendApp"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -56,7 +56,7 @@
         </div>
 
         <!-- content -->
-        <div class="container" ng-app="invisibleFriendApp">
+        <div class="container">
             <div ng-view=""></div>
             <!-- Example row of columns -->
             <!--
@@ -92,14 +92,15 @@
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/lib/jquery/jquery-1.10.2.min.js"><\/script>')</script>
-        
+
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="js/lib/bootstrap/bootstrap.min.js"></script>
-        
+
         <!-- Angular libraries -->
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
-        <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular-resource.min.js"></script>-->
-        
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+        <script src="js/lib/angular/angular-animate.js"></script>
+        <script src="js/lib/angular/angular-resource.js"></script>
+        <script src="js/lib/angular/angular-route.js"></script>
         <!-- App libs -->
         <script src="js/app.js"></script>
         <script src="js/factories.js"></script>
