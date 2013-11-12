@@ -9,7 +9,7 @@
  * Juegos entity controller
  * @author David Andrés Maznzano Herrera <damanzano>
  */
-app.controller('juegosController', ['$scope', 'appFactory', function($scope, appFactory) {
+app.controller('juegosController', ['$scope', '$routeParams', 'appFactory', function($scope, $routeParams, appFactory) {
         $scope.status;
         $scope.juegos;
 
@@ -17,15 +17,15 @@ app.controller('juegosController', ['$scope', 'appFactory', function($scope, app
         function init() {
             appFactory.getJuegos()
                     .success(function(juegosCollection) {
-                        if(juegosCollection != null){
+                        if (juegosCollection != null) {
                             $scope.juegos = juegosCollection;
-                        }else{
+                        } else {
                             $scope.juegos = appFactory.getStaticJuegos();
                         }
                     }).error(function(error) {
-                        $scope.status = 'Unable to load juegos data: ' + error.message;
-                        $scope.juegos = appFactory.getStaticJuegos();
-                    });
+                $scope.status = 'Unable to load juegos data: ' + error.message;
+                $scope.juegos = appFactory.getStaticJuegos();
+            });
         }
 
         $scope.updateJuego = function(juegoId) {
@@ -99,7 +99,7 @@ app.controller('juegosController', ['$scope', 'appFactory', function($scope, app
  * Participante entity controller
  * @author David Andrés Maznzano Herrera <damanzano>
  */
-app.controller('participantesController', ['$scope', '$routeParams' ,'appFactory', function($scope, $routeParams, appFactory) {
+app.controller('participantesController', ['$scope', '$routeParams', 'appFactory', function($scope, $routeParams, appFactory) {
         $scope.juego;
         $scope.status;
         $scope.participantes;
@@ -107,31 +107,33 @@ app.controller('participantesController', ['$scope', '$routeParams' ,'appFactory
         init();
         function init() {
             var juegoId = ($routeParams.juegoId) ? parseInt($routeParams.juegoId) : 0;
-            if(juegoId > 0){
-                 appFactory.getJuego(juegoId)
-                         .success(function(juegoObject){
-                             $scope.juego = juegoObject;
-                         })
-                         .error(function(error){
-                             $scope.status = 'Unable to load juego data: ' + error.message;
-                         });
-                   
-                                            
-                            
-                
+            if (juegoId > 0) {
+                appFactory.getJuego(juegoId)
+                        .success(function(juegoObject) {
+                            $scope.juego = juegoObject;
+                        })
+                        .error(function(error) {
+                            $scope.status = 'Unable to load juego data: ' + error.message;
+                        });
+
+                appFactory.getParticipantes()
+                        .success(function(partCollection) {
+                            if (partCollection != null) {
+                                for (var i = 0; i < partCollection.participantes.length; i++) {
+                                    var participante = partCollection.participantes[i];
+                                    if (participante.juego.numeroId == juegoId) {
+                                        $scope.participantes.push(participante);
+                                        console.log(participantes.length);
+                                    }
+                                }
+                            }
+                        })
+                        .error(function(error) {
+                            $scope.status = 'Unable to load participantes data: ' + error.message;
+                        });
             }
-            appFactory.getJuegos()
-                    .success(function(juegosCollection) {
-                        if(juegosCollection != null){
-                            $scope.juegos = juegosCollection;
-                        }else{
-                            $scope.juegos = appFactory.getStaticJuegos();
-                        }
-                    }).error(function(error) {
-                        $scope.status = 'Unable to load participantes data: ' + error.message;
-                        $scope.juegos = appFactory.getStaticJuegos();
-                    });
+
         }
 
-        
+
     }]);

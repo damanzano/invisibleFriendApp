@@ -16,7 +16,7 @@ app.config(['$routeProvider', function($routeProvider) {
                 templateUrl: 'views/juegos/juegos-list.html'
             })
             .when('/juegos/:juegoId', {
-                controller: 'juegosController',
+                controller: 'participantesController',
                 templateUrl: 'views/juegos/juego-details.html'
             })
             .when('/participantes/:juegoId',{

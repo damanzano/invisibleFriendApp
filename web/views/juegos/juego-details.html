@@ -1,12 +1,22 @@
-<div class="participantes view">
+<div class="juego view">
     <div class="row">
-        <h2>{{ juego.descripcion}}</h2>
+        <h2>({{ juego.numeroId}}) {{ juego.descripcion}}</h2>
         <div class="juego-details">
+            <h3>Programaci&oacute;n</h3>
             <ul>
-                <li>N&uacute;mero de juego {{ juego.numeroId}}</li>
+                <!--<li>N&uacute;mero de juego {{ juego.numeroId}}</li>-->
                 <li>Fecha de creaci&oacute;n {{ juego.fechaCreacion | date:'fullDate'}}</li>
                 <li>Inicio endulce {{ juego.fechaInicial | date:'fullDate' }}</li>
                 <li>Destape {{ juego.fechaFinal | date:'fullDate' }}</li>
+            </ul>
+            <h3>Participantes</h3>
+            <ul>
+                <!--<li>N&uacute;mero de juego {{ juego.numeroId}}</li>-->
+                <li ng-repeat="participante in participantes">
+                    <img class="participante-img" src="../../photos/no-images.png" alt="{{participante.personas.nombre}} {{participante.personas.apellidos}}">
+                    {{participante.personas.nombre}} {{participante.personas.apellidos}}
+                    <small>{{participante.personas.ubicacion}}</small>
+                </li> 
             </ul>
         </div>
     </div>
