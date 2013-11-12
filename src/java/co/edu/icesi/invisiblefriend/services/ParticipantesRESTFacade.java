@@ -130,4 +130,16 @@ public class ParticipantesRESTFacade {
         return String.valueOf(getJpaController().getParticipantesCount());
     }
     
+    /**
+     * Get a particualr juego's participants 
+     */
+    @GET
+    @Path("juego/{id}")
+    @Produces({"application/xml", "application/json"})
+    public Participantes findByJuego(@PathParam("id") PathSegment id) {
+        
+        co.edu.icesi.invisiblefriend.entities.ParticipantesPK key = getPrimaryKey(id);
+        return getJpaController().findParticipantes(key);
+    }
+    
 }

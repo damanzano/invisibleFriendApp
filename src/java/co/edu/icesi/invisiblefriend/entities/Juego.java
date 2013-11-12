@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package co.edu.icesi.invisiblefriend.entities;
 
 import java.io.Serializable;
@@ -14,6 +13,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -38,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Juego.findByFechaInicial", query = "SELECT j FROM Juego j WHERE j.fechaInicial = :fechaInicial"),
     @NamedQuery(name = "Juego.findByFechaFinal", query = "SELECT j FROM Juego j WHERE j.fechaFinal = :fechaFinal")})
 public class Juego implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -59,6 +61,11 @@ public class Juego implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaFinal;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "juego")
+    /*@JoinTable(
+            name = "PARTICIPANTES",
+            joinColumns = {
+                @JoinColumn(name = "NUMERO_JUEGO", referencedColumnName = "NUMEROID")}
+    )*/
     private Collection<Participantes> participantesCollection;
 
     public Juego() {
@@ -116,7 +123,7 @@ public class Juego implements Serializable {
         this.fechaFinal = fechaFinal;
     }
 
-    @XmlTransient
+    //@XmlTransient
     public Collection<Participantes> getParticipantesCollection() {
         return participantesCollection;
     }
@@ -149,5 +156,5 @@ public class Juego implements Serializable {
     public String toString() {
         return "co.edu.icesi.entities.Juego[ numeroId=" + numeroId + " ]";
     }
-    
+
 }

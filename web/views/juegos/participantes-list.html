@@ -1,0 +1,13 @@
+<div class="participantes view">
+    <div class="row">
+        <h2>{{ juego.descripcion}}</h2>
+        <div class="juego-details">
+            <ul>
+                <li>N&uacute;mero de juego {{ juego.numeroId}}</li>
+                <li>Fecha de creaci&oacute;n {{ juego.fechaCreacion | date:'fullDate'}}</li>
+                <li>Inicio endulce {{ juego.fechaInicial | date:'fullDate' }}</li>
+                <li>Destape {{ juego.fechaFinal | date:'fullDate' }}</li>
+            </ul>
+        </div>
+    </div>
+</div>

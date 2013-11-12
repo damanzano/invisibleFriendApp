@@ -327,4 +327,11 @@ public class ParticipantesJpaController implements Serializable {
         }
     }
     
+    public Participantes findParticipantesByJuego(String juegoId) {
+        EntityManager em = getEntityManager();
+        //TODO: Implement this functionality
+        
+        return new Participantes();
+    }
+    
 }
