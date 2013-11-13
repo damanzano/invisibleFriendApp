@@ -1,0 +1,38 @@
+<div class="juego view">
+    <div class="row">
+        <h2>Editar Juego ({{ currentJuego.numeroId}}) {{ currentJuego.descripcion}}</h2>
+        <div class="juego-details">
+            <form role="form">
+                <div class="form-group">
+                    <label for="descripcion">Descripci&oacute;n</label>
+                    <input type="text" ng-model="currentJuego.descripcion" class="form-control" name="descripcion" id="descripcion" placeholder="Ingresa la descripci&oacute;n" required>
+                </div>
+                
+                <h3>Programaci&oacute;n</h3>
+                <div class="form-group">
+                    <label for="fechaInicial">Inicio endulce</label>
+                    <input type="date" ng-model="currentJuego.fechaInicial" class="form-control" name="fechaInicial" id="fechaInicial" required>
+                </div>
+                <div class="form-group">
+                    <label for="fechaFinal">Destape</label>
+                    <input type="date" ng-model="currentJuego.fechaFinal" class="form-control" name="fechaFinal" id="fechaFinal" required>
+                </div>
+                
+                <h3>Participantes</h3>
+
+                <div><input type="text" placeholder="Filtrar" class="form-control" ng-model="filt"/></div>
+                <div class="participantes">
+                    <div class="participante col-md-3 text-center" ng-repeat="participante in currentJuego.participantesCollection| filter:filt | orderBy:participante.personas.nombre">
+                        <img class="participante-img img-circle img-thumbnail img-responsive" src="photos/{{participante.personas.foto? participante.personas.foto:'no-image.png'}}" alt="{{participante.personas.nombre}} {{participante.personas.apellidos}}">
+                        <p>
+                            <span class="participante-name lead">{{participante.personas.nombre}} {{participante.personas.apellidos}}</span>
+                            <br/>
+                            <span class="participante-place"><small>{{participante.personas.ubicacion}}</small></span>
+                        </p>
+                        <a href="#" class="bt btn-danger"><span class="glyphicon glyphicon-minus"></span> Borrar</a>
+                    </div> 
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

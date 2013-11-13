@@ -12,20 +12,32 @@
 app.controller('juegosController', ['$scope', '$routeParams', 'appFactory', function($scope, $routeParams, appFactory) {
         $scope.status;
         $scope.juegos;
+        $scope.currentJuego;
 
         init();
         function init() {
-            appFactory.getJuegos()
-                    .success(function(juegosCollection) {
-                        if (juegosCollection != null) {
-                            $scope.juegos = juegosCollection;
-                        } else {
-                            $scope.juegos = appFactory.getStaticJuegos();
-                        }
-                    }).error(function(error) {
-                $scope.status = 'Unable to load juegos data: ' + error.message;
-                $scope.juegos = appFactory.getStaticJuegos();
-            });
+            var juegoId = ($routeParams.juegoId) ? parseInt($routeParams.juegoId) : 0;
+            if (juegoId > 0) {
+                appFactory.getJuego(juegoId)
+                        .success(function(juegoObject) {
+                            $scope.currentJuego = juegoObject;
+                        })
+                        .error(function(error) {
+                            $scope.status = 'Unable to load juego data: ' + error.message;
+                        });
+            } else {
+                appFactory.getJuegos()
+                        .success(function(juegosCollection) {
+                            if (juegosCollection != null) {
+                                $scope.juegos = juegosCollection;
+                            } else {
+                                $scope.juegos = appFactory.getStaticJuegos();
+                            }
+                        }).error(function(error) {
+                    $scope.status = 'Unable to load juegos data: ' + error.message;
+                    $scope.juegos = appFactory.getStaticJuegos();
+                });
+            }
         }
 
         $scope.updateJuego = function(juegoId) {

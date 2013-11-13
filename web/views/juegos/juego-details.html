@@ -1,23 +1,30 @@
 <div class="juego view">
+    <div class="toolbar">
+        <a class="btn btn-primary pull-right" href="#/juegos/edit/{{currentJuego.numeroId}}"><span class="glyphicon glyphicon-edit"></span> Editar</a>
+    </div>
     <div class="row">
-        <h2>({{ juego.numeroId}}) {{ juego.descripcion}}</h2>
+        <h2>({{ currentJuego.numeroId}}) {{ currentJuego.descripcion}}</h2>
         <div class="juego-details">
             <h3>Programaci&oacute;n</h3>
             <ul>
                 <!--<li>N&uacute;mero de juego {{ juego.numeroId}}</li>-->
-                <li>Fecha de creaci&oacute;n {{ juego.fechaCreacion | date:'fullDate'}}</li>
-                <li>Inicio endulce {{ juego.fechaInicial | date:'fullDate' }}</li>
-                <li>Destape {{ juego.fechaFinal | date:'fullDate' }}</li>
+                <li>Fecha de creaci&oacute;n {{ currentJuego.fechaCreacion | date:'fullDate'}}</li>
+                <li>Inicio endulce {{ currentJuego.fechaInicial | date:'fullDate' }}</li>
+                <li>Destape {{ currentJuego.fechaFinal | date:'fullDate' }}</li>
             </ul>
             <h3>Participantes</h3>
-            <ul>
-                <!--<li>N&uacute;mero de juego {{ juego.numeroId}}</li>-->
-                <li ng-repeat="participante in participantes">
-                    <img class="participante-img" src="../../photos/no-images.png" alt="{{participante.personas.nombre}} {{participante.personas.apellidos}}">
-                    {{participante.personas.nombre}} {{participante.personas.apellidos}}
-                    <small>{{participante.personas.ubicacion}}</small>
-                </li> 
-            </ul>
+
+            <div><input type="text" placeholder="Filtrar" class="form-control" ng-model="filt"/></div>
+            <div class="participantes">
+                <div class="participante col-md-3 text-center" ng-repeat="participante in currentJuego.participantesCollection| filter:filt | orderBy:participante.personas.nombre">
+                    <img class="participante-img img-circle img-thumbnail img-responsive" src="photos/{{participante.personas.foto? participante.personas.foto:'no-image.png'}}" alt="{{participante.personas.nombre}} {{participante.personas.apellidos}}">
+                    <p>
+                        <span class="participante-name lead">{{participante.personas.nombre}} {{participante.personas.apellidos}}</span>
+                        <br/>
+                        <span class="participante-place"><small>{{participante.personas.ubicacion}}</small></span>
+                    </p>
+                </div> 
+            </div>
         </div>
     </div>
 </div>

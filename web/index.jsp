@@ -50,7 +50,7 @@
         <div class="jumbotron">
             <div class="container">
                 <h1>Bienvenido a nuestra App de Amigo Secreto</h1>
-                <p>A coninuaci&oacute;n encontraras los juegos activos en este momento</p>
+                <p>A continuaci&oacute;n encontraras los juegos activos en este momento</p>
                 <!--<p><a class="btn btn-primary btn-lg" role="button">Learn more »</a></p>-->
             </div>
         </div>

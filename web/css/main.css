@@ -8,3 +8,14 @@ body {
   padding-top: 50px;
   padding-bottom: 20px;
 }
+.juegos-list{
+    margin-top: 20px;
+}
+.participantes{
+    margin-top: 20px;
+}
+.participante-img{
+    width: 100px;
+}
+.participante-name{}
+.participante-place{}

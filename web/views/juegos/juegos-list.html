@@ -2,25 +2,40 @@
     <div class="row">
         <h2>Juegos en curso</h2>
         <div>
-            <div><input type="text" placeholder="Filtrar" class="form-control" ng-model="filt"/></div>
-            <table class="table">
-                <tr>
-                    <th>N&uacute;mero de juego</th>
-                    <th>Descripci&oacute;n</th>
-                    <th>Fecha de creaci&oacute;n</th>
-                    <th>Fecha inicio</th>
-                    <th>Destape</th>
-                </tr>
+            <div class="input-group">
+                <input type="text" placeholder="Filtrar" class="form-control" ng-model="filt"/>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+            </div>
 
-                <tr ng-repeat="juego in juegos| filter:filt | orderBy:fechaCreacion">
-                    <td>{{ juego.numeroId}}</td>
-                    <td>{{ juego.descripcion}}</td>
-                    <td>{{ juego.fechaCreacion | date:'fullDate'}}</td>
-                    <td>{{ juego.fechaInicial | date:'fullDate' }}</td>
-                    <td>{{ juego.fechaFinal | date:'fullDate' }}</td>
-                    <td><a class="btn btn-primary" href="#/juegos/{{juego.numeroId}}">Detalles</a></td>
-                </tr>
-            </table>
+            <div class="juegos-list">
+                <table class="table">
+                    <tr>
+                        <th>N&uacute;mero de juego</th>
+                        <th>Descripci&oacute;n</th>
+                        <th>Fecha de creaci&oacute;n</th>
+                        <th>Fecha inicio</th>
+                        <th>Destape</th>
+                        <th></th>
+                    </tr>
+
+                    <tr ng-repeat="juego in juegos| filter:filt | orderBy:fechaCreacion">
+                        <td>{{ juego.numeroId}}</td>
+                        <td>{{ juego.descripcion}}</td>
+                        <td>{{ juego.fechaCreacion | date:'fullDate'}}</td>
+                        <td>{{ juego.fechaInicial | date:'fullDate' }}</td>
+                        <td>{{ juego.fechaFinal | date:'fullDate' }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="#/juegos/{{juego.numeroId}}">
+                                <span class="glyphicon glyphicon-eye-open"></span> Detalles
+                            </a>
+                            
+                            <a class="btn btn-primary" href="#/juegos/{{juego.numeroId}}">
+                                <span class="glyphicon glyphicon-edit"></span> Editar
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
             <!-- Creation Form -->
             <form role="form">
@@ -36,7 +51,7 @@
                     <label for="fechaFinal">Fecha final</label>
                     <input type="date" ng-model="newJuego.fechaFinal" class="form-control" id="fechaFinal">
                 </div>
-                <button type="submit" ng-click="createJuego()" class="btn btn-default">Crear juego</button>
+                <button type="submit" ng-click="createJuego()" class="btn btn-primary">Crear juego</button>
             </form>
         </div>
     </div>
