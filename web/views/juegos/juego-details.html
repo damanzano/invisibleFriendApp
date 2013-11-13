@@ -14,7 +14,11 @@
             </ul>
             <h3>Participantes</h3>
 
-            <div><input type="text" placeholder="Filtrar" class="form-control" ng-model="filt"/></div>
+            <div class="input-group">
+                <input type="text" placeholder="Filtrar" class="form-control" ng-model="filt"/>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+            </div>
+            
             <div class="participantes">
                 <div class="participante col-md-3 text-center" ng-repeat="participante in currentJuego.participantesCollection| filter:filt | orderBy:participante.personas.nombre">
                     <img class="participante-img img-circle img-thumbnail img-responsive" src="photos/{{participante.personas.foto? participante.personas.foto:'no-image.png'}}" alt="{{participante.personas.nombre}} {{participante.personas.apellidos}}">

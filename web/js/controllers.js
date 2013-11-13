@@ -33,10 +33,11 @@ app.controller('juegosController', ['$scope', '$routeParams', 'appFactory', func
                             } else {
                                 $scope.juegos = appFactory.getStaticJuegos();
                             }
-                        }).error(function(error) {
-                    $scope.status = 'Unable to load juegos data: ' + error.message;
-                    $scope.juegos = appFactory.getStaticJuegos();
-                });
+                        })
+                        .error(function(error) {
+                            $scope.status = 'Unable to load juegos data: ' + error.message;
+                            $scope.juegos = appFactory.getStaticJuegos();
+                        });
             }
         }
 
