@@ -18,6 +18,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--<link href="css/bootstrap-datepicker.css" rel="stylesheet">-->
         <link href="css/main.css" rel="stylesheet">
     </head>
     <body>
@@ -95,12 +96,13 @@
 
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="js/lib/bootstrap/bootstrap.min.js"></script>
+        <!--<script src="js/lib/bootstrap/bootstrap-datepicker.js"></script>-->
 
         <!-- Angular libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
-        <script src="js/lib/angular/angular-animate.js"></script>
-        <script src="js/lib/angular/angular-resource.js"></script>
-        <script src="js/lib/angular/angular-route.js"></script>
+        <script src="js/lib/angular/angular-animate.min.js"></script>
+        <script src="js/lib/angular/angular-resource.min.js"></script>
+        <script src="js/lib/angular/angular-route.min.js"></script>
         <!-- App libs -->
         <script src="js/app.js"></script>
         <script src="js/factories.js"></script>

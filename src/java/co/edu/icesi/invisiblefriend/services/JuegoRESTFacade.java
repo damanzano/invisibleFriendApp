@@ -46,7 +46,7 @@ public class JuegoRESTFacade {
     }
     
     @POST
-    @Consumes({"application/xml", "application/json"})
+    @Consumes({"application/json", "application/xml"})
     public Response create(Juego entity) {
         try {
             getJpaController().create(entity);
@@ -86,7 +86,7 @@ public class JuegoRESTFacade {
     }
 
     @GET
-    @Produces({"application/xml", "application/json"})
+    @Produces({"application/json", "application/xml"})
     public List<Juego> findAll() {
         return getJpaController().findJuegoEntities();
     }

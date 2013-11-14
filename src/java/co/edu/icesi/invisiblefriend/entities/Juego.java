@@ -13,8 +13,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -22,7 +20,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,7 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Juego.findByDescripcion", query = "SELECT j FROM Juego j WHERE j.descripcion = :descripcion"),
     @NamedQuery(name = "Juego.findByFechaCreacion", query = "SELECT j FROM Juego j WHERE j.fechaCreacion = :fechaCreacion"),
     @NamedQuery(name = "Juego.findByFechaInicial", query = "SELECT j FROM Juego j WHERE j.fechaInicial = :fechaInicial"),
-    @NamedQuery(name = "Juego.findByFechaFinal", query = "SELECT j FROM Juego j WHERE j.fechaFinal = :fechaFinal")})
+    @NamedQuery(name = "Juego.findByFechaFinal", query = "SELECT j FROM Juego j WHERE j.fechaFinal = :fechaFinal"),
+    @NamedQuery(name = "Juego.count", query = "SELECT count (j.numeroId) FROM Juego j ")
+})
 public class Juego implements Serializable {
 
     private static final long serialVersionUID = 1L;

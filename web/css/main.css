@@ -11,11 +11,17 @@ body {
 .juegos-list{
     margin-top: 20px;
 }
-.participantes{
+.row{
     margin-top: 20px;
+}
+.participante{
+    margin-bottom: 15px;
 }
 .participante-img{
     width: 100px;
 }
 .participante-name{}
 .participante-place{}
+.toolbar .btn{
+    margin-left: 3px;
+}

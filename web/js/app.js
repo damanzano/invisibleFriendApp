@@ -32,3 +32,22 @@ app.config(['$routeProvider', function($routeProvider) {
             })
             .otherwise({redirectTo: '/'});
 }]);
+
+/**
+ * This custom directive fix a bug with Googlr Chrome input type="date" tags
+ **/
+app.directive('input', function () {
+  return {
+    require: '?ngModel',
+    restrict: 'E',
+    link: function (scope, element, attrs, ngModel) {
+      if ( attrs.type="date" && ngModel ) {
+        element.bind('change', function () {
+          scope.$apply(function() {
+            ngModel.$setViewValue(element.val());
+          });
+    	});
+      }
+    }
+  };
+});

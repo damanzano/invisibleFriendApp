@@ -11,52 +11,115 @@
  */
 app.controller('juegosController', ['$scope', '$routeParams', 'appFactory', function($scope, $routeParams, appFactory) {
         $scope.status;
-        $scope.juegos;
+        $scope.juegos = [];
         $scope.currentJuego;
+        $scope.personas = [];
 
         init();
         function init() {
             var juegoId = ($routeParams.juegoId) ? parseInt($routeParams.juegoId) : 0;
-            if (juegoId > 0) {
-                appFactory.getJuego(juegoId)
-                        .success(function(juegoObject) {
-                            $scope.currentJuego = juegoObject;
-                        })
-                        .error(function(error) {
-                            $scope.status = 'Unable to load juego data: ' + error.message;
-                        });
-            } else {
-                appFactory.getJuegos()
-                        .success(function(juegosCollection) {
-                            if (juegosCollection != null) {
-                                $scope.juegos = juegosCollection;
-                            } else {
-                                $scope.juegos = appFactory.getStaticJuegos();
-                            }
-                        })
-                        .error(function(error) {
-                            $scope.status = 'Unable to load juegos data: ' + error.message;
-                            $scope.juegos = appFactory.getStaticJuegos();
-                        });
-            }
+            getJuegos(juegoId);
+
         }
 
-        $scope.updateJuego = function(juegoId) {
-            var juego;
+        function getJuegos(juegoId) {
+            appFactory.getJuegos()
+                    .success(function(juegosCollection) {
+                        if (juegosCollection != null) {
+                            var json = juegosCollection.juego;
+                            if (json instanceof Array) {
+                                for (var i = 0; i < juegosCollection.juego.length; i++) {
+                                    $scope.juegos.push(juegosCollection.juego[i]);
+                                }
+                            } else {
+                                $scope.juegos.push(juegosCollection.juego);
+                            }
+                        } 
+
+                        if (juegoId > 0) {
+                            getCurrentJuego(juegoId);
+                        }
+                    })
+                    .error(function(error) {
+                        $scope.status = 'Unable to load juegos data: ' + error.message;
+                        $scope.juegos = appFactory.getStaticJuegos();
+                    });
+        }
+        
+        function getCurrentJuego(juegoId) {
             for (var i = 0; i < $scope.juegos.length; i++) {
-                var currentJuego = $scope.juegos[i];
-                if (currentJuego.numeroId === juegoId) {
-                    juego = currentJuego;
+                if ($scope.juegos[i].numeroId == juegoId) {
+                    $scope.currentJuego = $scope.juegos[i];
+                    getPersonas($scope.currentJuego);
                     break;
                 }
             }
 
-            appFactory.updateJuego(juego)
-                    .succes(function() {
-                        $scope.status = 'Updated juego! Refreshing the juegos liost.';
+            //if juego is not in the list try to get it from database
+            if ($scope.currentJuego == null) {
+                appFactory.getJuego(juegoId)
+                        .success(function(juegoObject) {
+                            $scope.currentJuego = juegoObject;
+                            getPersonas($scope.currentJuego);
+                        })
+                        .error(function(error) {
+                            $scope.status = 'Unable to load juego data: ' + error.message;
+                        });
+            }
+        }
+        
+        function getPersonas(juego) {
+            appFactory.getPersonas()
+                    .success(function(personasCollection) {
+                        if (personasCollection != null) {
+                            var json = personasCollection.personas;
+                            if (json instanceof Array) {
+                                for (var i = 0; i < personasCollection.personas.length; i++) {
+                                    var persona = personasCollection.personas[i];
+                                    //verify if this persona is a participante, if not do not include in the array
+
+                                    var found = false;
+                                    for (var j = 0; j < juego.participantesCollection.length; j++) {
+                                        var participante = juego.participantesCollection[j];
+                                        if (participante.personas.numeroId == persona.numeroId) {
+                                            found = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!found) {
+                                        $scope.personas.push(persona);
+                                    }
+
+                                }
+                            } else {
+                                //TODO complete this functionality
+                                $scope.personas.push(personasCollection.personas);
+                            }
+                        }
                     })
                     .error(function(error) {
-                        $scope.status = 'Unable to update juego: ' + error.message;
+                        $scope.status = 'Unable to load juegos data: ' + error.message;
+                        $scope.juegos = appFactory.getStaticJuegos();
+                    });
+        }
+
+        
+
+        $scope.updateJuego = function(juego) {
+            appFactory.updateJuego(juego)
+                    .success(function(data, status, headers, config) {
+                        $scope.status = 'Updated juego! Refreshing the juegos list.';
+
+                        console.log(juego);
+                        //refresh the juegos list
+                        for (var i = 0; i < $scope.juegos.length; i++) {
+                            if ($scope.juegos[i].numeroId == juego.numeroId) {
+                                $scope.juegos[i] = juego;
+                            }
+                        }
+                    })
+                    .error(function(data, status, headers, config) {
+                        //TODO Do someting when errors
                     });
         };
 
@@ -69,12 +132,18 @@ app.controller('juegosController', ['$scope', '$routeParams', 'appFactory', func
             };
 
             appFactory.createJuego(newJuego)
-                    .success(function() {
+                    .success(function(data, status, headers, config) {
                         $scope.status = 'Inserted juego! Refreshing customer list.';
-                        $scope.customers.push(cust);
+                        var location = headers('Location');
+                        var parts = location.split('/');
+                        var newId = parts[6]
+                        newJuego.numeroId = newId;
+                        $scope.juegos.push(newJuego);
+
                     })
                     .error(function(error) {
                         $scope.status = 'Unable to insert juego: ' + error.message;
+                        console.log(error.message);
                     });
         };
 
@@ -95,58 +164,76 @@ app.controller('juegosController', ['$scope', '$routeParams', 'appFactory', func
                     });
         };
 
-        $scope.addJuego = function() {
-            num_juegos++;
-            fecha = new Date();
-            $scope.juegos.push({
-                numeroId: num_juegos
-                , descripcion: $scope.newJuego.descripcion
-                , fechaCreacion: fecha
-                , fechaInicial: $scope.newJuego.fechaInicial
-                , fechaFinal: $scope.newJuego.fechaFinal});
-        };
-    }]);
+        $scope.addParticipante = function(persona) {
+            var newParticipante = {
+                fechaInscripcion: new Date()
+                , personas: persona
+                , juego: $scope.currentJuego
+                , participantesPK: {
+                    numeroJuego: $scope.currentJuego.numeroId
+                    , numeroPersona: persona.numeroId
+                }
+            };
 
-/**
- * Created on : 07-nov-2013, 15:02:12
- * Participante entity controller
- * @author David Andrés Maznzano Herrera <damanzano>
- */
-app.controller('participantesController', ['$scope', '$routeParams', 'appFactory', function($scope, $routeParams, appFactory) {
-        $scope.juego;
-        $scope.status;
-        $scope.participantes;
+            // This is not correct but it is the only way i found to solve circular references
+            var newParticipanteForList = {
+                fechaInscripcion: new Date()
+                , personas: persona
+                , participantesPK: {
+                    numeroJuego: $scope.currentJuego.numeroId
+                    , numeroPersona: persona.numeroId
+                }
+            };
 
-        init();
-        function init() {
-            var juegoId = ($routeParams.juegoId) ? parseInt($routeParams.juegoId) : 0;
-            if (juegoId > 0) {
-                appFactory.getJuego(juegoId)
-                        .success(function(juegoObject) {
-                            $scope.juego = juegoObject;
-                        })
-                        .error(function(error) {
-                            $scope.status = 'Unable to load juego data: ' + error.message;
-                        });
+            //persist newParticipante
+            appFactory.createParticipante(newParticipante)
+                    .success(function(data, status, headers, config) {
+                        $scope.status = 'Inserted participante!';
 
-                appFactory.getParticipantes()
-                        .success(function(partCollection) {
-                            if (partCollection != null) {
-                                for (var i = 0; i < partCollection.participantes.length; i++) {
-                                    var participante = partCollection.participantes[i];
-                                    if (participante.juego.numeroId == juegoId) {
-                                        $scope.participantes.push(participante);
-                                        console.log(participantes.length);
-                                    }
-                                }
+                        // add participante to the juego
+                        $scope.currentJuego.participantesCollection.push(newParticipanteForList);
+
+                        //remove from personas beacuse it is a participante
+                        for (var i = 0; i < $scope.personas.length; i++) {
+                            if (persona.numeroId == $scope.personas[i].numeroId) {
+                                $scope.personas.splice(i, 1);
+                                break;
                             }
-                        })
-                        .error(function(error) {
-                            $scope.status = 'Unable to load participantes data: ' + error.message;
-                        });
-            }
+                        }
 
-        }
+                        //persist juego
+                        $scope.updateJuego($scope.currentJuego);
 
+                    })
+                    .error(function(error) {
+                        $scope.status = 'Unable to insert participante: ' + error.message;
+                        console.log(error.message);
+                    });
+        };
 
+        $scope.deleteParticipante = function(participante) {
+            appFactory.deleteParticipante('participantePK;numeroJuego=' + participante.participantesPK.numeroJuego + ';numeroPersona=' + participante.participantesPK.numeroPersona)
+                    .success(function(data, status, headers, config) {
+                        $scope.status = 'Delete participante!';
+
+                        //remove from participantes
+                        for (var i = 0; i < $scope.currentJuego.participantesCollection.length; i++) {
+                            if (participante.personas.numeroId == $scope.currentJuego.participantesCollection[i].personas.numeroId) {
+                                $scope.currentJuego.participantesCollection.splice(i, 1);
+                                break;
+                            }
+                        }
+
+                        //add to persons
+                        $scope.personas.push(participante.personas);
+
+                        //persist juego
+                        $scope.updateJuego($scope.currentJuego);
+
+                    })
+                    .error(function(error) {
+                        $scope.status = 'Unable to insert participante: ' + error.message;
+                        console.log(error.message);
+                    });
+        };
     }]);
