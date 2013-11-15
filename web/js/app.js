@@ -3,7 +3,7 @@
  * Created on : 07-nov-2013, 11:54:32
  * @author David Andrés Maznzano Herrera <damanzano>
  */
-var app = angular.module('invisibleFriendApp', ['ngRoute','demo']);
+var app = angular.module('invisibleFriendApp', ['ngRoute']);
 
 app.config(['$routeProvider', function($routeProvider) {
         $routeProvider
@@ -27,7 +27,7 @@ app.config(['$routeProvider', function($routeProvider) {
                     controller: 'personasController',
                     templateUrl: 'views/personas/personas-list.html'
                 })
-                .when('/personas/:juegoId', {
+                .when('/personas/:personaId', {
                     controller: 'personasController',
                     templateUrl: 'views/personas/personas-details.html'
                 })

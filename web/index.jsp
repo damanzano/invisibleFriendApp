@@ -95,7 +95,6 @@
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/lib/jquery/jquery-1.10.2.min.js"><\/script>')</script>
-        <script src="js/lib/jquery/jquery.ui.widget.js"></script>
         
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="js/lib/bootstrap/bootstrap.min.js"></script>
@@ -106,26 +105,6 @@
         <script src="js/lib/angular/angular-animate.min.js"></script>
         <script src="js/lib/angular/angular-resource.min.js"></script>
         <script src="js/lib/angular/angular-route.min.js"></script>
-        
-        <!-- jQuery upload files  -->
-         <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
-        <script src="js/lib/jquery-upload/load-image.min.js"></script>
-        <!-- The Canvas to Blob plugin is included for image resizing functionality -->
-        <script src="js/lib/jquery-upload/canvas-to-blob.min.js"></script>
-        <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
-        <script src="js/lib/jquery-upload/jquery.iframe-transport.js"></script>
-        <!-- The basic File Upload plugin -->
-        <script src="js/lib/jquery-upload/jquery.fileupload.js"></script>
-        <!-- The File Upload processing plugin -->
-        <script src="js/lib/jquery-upload/jquery.fileupload-process.js"></script>
-        <!-- The File Upload image preview & resize plugin -->
-        <script src="js/lib/jquery-upload/jquery.fileupload-image.js"></script>
-        <!-- The File Upload validation plugin -->
-        <script src="js/lib/jquery-upload/jquery.fileupload-validate.js"></script>
-        <!-- The File Upload Angular JS module -->
-        <script src="js/lib/jquery-upload/jquery.fileupload-angular.js"></script>
-        <!-- The main application script -->
-        <script src="js/lib/jquery-upload/app.js"></script>
        
         
         <!-- App libs -->
