@@ -3,7 +3,7 @@
  * Created on : 07-nov-2013, 11:54:32
  * @author David Andrés Maznzano Herrera <damanzano>
  */
-var app = angular.module('invisibleFriendApp', ['ngRoute']);
+var app = angular.module('invisibleFriendApp', ['ngRoute','demo']);
 
 app.config(['$routeProvider', function($routeProvider) {
         $routeProvider

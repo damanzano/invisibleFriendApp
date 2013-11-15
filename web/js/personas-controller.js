@@ -87,8 +87,8 @@ app.controller('personasController', ['$scope', '$routeParams', 'appFactory', fu
             var newPersona = {
                 
             };
-
-            appFactory.createPersona(newPersona)
+            console.log(DemoFileUploadController.scope().file);
+            /*appFactory.createPersona(newPersona)
                     .success(function(data, status, headers, config) {
                         $scope.status = 'Inserted persona! Refreshing personas list.';
                         var location = headers('Location');
@@ -101,7 +101,7 @@ app.controller('personasController', ['$scope', '$routeParams', 'appFactory', fu
                     .error(function(data, status, headers, config) {
                         $scope.status = 'Unable to insert juego: ' + error.message;
                         console.log(error.message);
-                    });
+                    });*/
         };
 
         $scope.deleteJuego = function(personaId) {

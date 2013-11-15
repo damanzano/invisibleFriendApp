@@ -18,17 +18,17 @@
                         <th>Opciones</th>
                     </tr>
 
-                    <tr ng-repeat="persona in personas | filter:filt | orderBy:numeroId">
-                        <td>{{ persona.numeroId }}</td>
-                        <td>{{ persona.nombre }}</td>
-                        <td>{{ persona.apellidos }}</td>
-                        <td>{{ persona.correoElectronico }}</td>
-                        <td>{{ persona.ubicacion }}</td>
+                    <tr ng-repeat="persona in personas| filter:filt | orderBy:numeroId">
+                        <td>{{ persona.numeroId}}</td>
+                        <td>{{ persona.nombre}}</td>
+                        <td>{{ persona.apellidos}}</td>
+                        <td>{{ persona.correoElectronico}}</td>
+                        <td>{{ persona.ubicacion}}</td>
                         <td>
                             <a class="btn btn-primary" href="#/personas/{{persona.numeroId}}">
                                 <span class="glyphicon glyphicon-eye-open"></span> Detalles
                             </a>
-                            
+
                             <a class="btn btn-primary" href="#/personas/edit/{{persona.numeroId}}">
                                 <span class="glyphicon glyphicon-edit"></span> Editar
                             </a>
@@ -38,42 +38,116 @@
             </div>
 
             <!-- Creation Form -->
-            <form role="form">
+            <form role="form" enctype="multipart/form-data" method="POST" >
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" ng-model="newPersona.nombre" class="form-control" id="nombre" placeholder="Ingresa el nombre">
+                    <input type="text" ng-model="newPersona.nombre" class="form-control" id="nombre" placeholder="Ingresa el nombre" required />
                 </div>
                 <div class="form-group">
                     <label for="apellidos">Apellidos</label>
-                    <input type="text" ng-model="newPersona.apellidos" class="form-control" id="apellidos" placeholder="Ingresa los apellidos">
+                    <input type="text" ng-model="newPersona.apellidos" class="form-control" id="apellidos" placeholder="Ingresa los apellidos" required />
                 </div>
                 <div class="form-group">
                     <label for="correoElectronico">Correo electr&oacute;nico</label>
-                    <input type="email" ng-model="newPersona.correoElectronico" class="form-control" id="correoElectronico" placeholder="correo@coreo.com">
+                    <input type="email" ng-model="newPersona.correoElectronico" class="form-control" id="correoElectronico" placeholder="correo@coreo.com" required />
                 </div>
                 <div class="form-group">
                     <label for="ubicacion">Ubicaci&oacute;n</label>
-                    <input type="text" ng-model="newPersona.ubicacion" class="form-control" id="ubicacion" placeholder="Ingresa al ubicación">
+                    <input type="text" ng-model="newPersona.ubicacion" class="form-control" id="ubicacion" placeholder="Ingresa al ubicación" required />
                 </div>
                 <div class="radio text-left">
                     <label>
-                        <input type="radio" ng-model="newPersona.sexo" id="sexo-m" name="sexo">
+                        <input type="radio" ng-model="newPersona.sexo" id="sexo-m" name="sexo" required />
                         Masculino
                     </label>
                 </div>
                 <div class="radio text-left">
                     <label>
-                        <input type="radio" ng-model="newPersona.sexo" id="sexo-f" name="sexo">
+                        <input type="radio" ng-model="newPersona.sexo" id="sexo-f" name="sexo" required />
                         Famenino
                     </label>
                 </div>
-                
-                <div class="form-group">
-                    <label for="fechaFinal">Foto</label>
-                    <input type="file" ng-model="newPersona.foto" class="form-control" id="foto" placeholder="Ingresa la foto">
+
+                <div class="form-group" data-ng-app="demo" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}">
+                    <label for="ubicacion">Foto</label>
+                    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                    <div class="row fileupload-buttonbar">
+                        <div class="col-lg-7">
+                            <!-- The fileinput-button span is used to style the file input field as button -->
+                            <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>Add files...</span>
+                                <input type="file" name="files[]" ng-disabled="disabled">
+                            </span>
+                            <button type="button" class="btn btn-primary start" data-ng-click="submit()">
+                                <i class="glyphicon glyphicon-upload"></i>
+                                <span>Start upload</span>
+                            </button>
+                            <button type="button" class="btn btn-warning cancel" data-ng-click="cancel()">
+                                <i class="glyphicon glyphicon-ban-circle"></i>
+                                <span>Cancel upload</span>
+                            </button>
+                            <!-- The global file processing state -->
+                            <span class="fileupload-process"></span>
+                        </div>
+                        <!-- The global progress state -->
+                        <div class="col-lg-5 fade" data-ng-class="{in: active()}">
+                            <!-- The global progress bar -->
+                            <div class="progress progress-striped active" data-file-upload-progress="progress()"><div class="progress-bar progress-bar-success" data-ng-style="{width: num + '%'}"></div></div>
+                            <!-- The extended global progress state -->
+                            <div class="progress-extended">&nbsp;</div>
+                        </div>
+                    </div>
+                    <!-- The table listing the files available for upload/download -->
+                    <table class="table table-striped files ng-cloak">
+                        <tr data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">
+                            <td data-ng-switch data-on="!!file.thumbnailUrl">
+                                <div class="preview" data-ng-switch-when="true">
+                                    <a data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}" data-gallery><img data-ng-src="{{file.thumbnailUrl}}" alt=""></a>
+                                </div>
+                                <div class="preview" data-ng-switch-default data-file-upload-preview="file"></div>
+                            </td>
+                            <td>
+                                <p class="name" data-ng-switch data-on="!!file.url">
+                                    <span data-ng-switch-when="true" data-ng-switch data-on="!!file.thumbnailUrl">
+                                        <a data-ng-switch-when="true" data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}" data-gallery>{{file.name}}</a>
+                                        <a data-ng-switch-default data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}">{{file.name}}</a>
+                                    </span>
+                                    <span data-ng-switch-default>{{file.name}}</span>
+                                </p>
+                                <strong data-ng-show="file.error" class="error text-danger">{{file.error}}</strong>
+                            </td>
+                            <td>
+                                <p class="size">{{file.size| formatFileSize}}</p>
+                                <div class="progress progress-striped active fade" data-ng-class="{pending: 'in'
+                                        }
+                                        [file.$state()]" data-file-upload-progress="file.$progress()"><div class="progress-bar progress-bar-success" data-ng-style="{width: num + '%'}"></div></div>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary start" data-ng-click="file.$submit()" data-ng-hide="!file.$submit || options.autoUpload" data-ng-disabled="file.$state() == 'pending' || file.$state() == 'rejected'">
+                                    <i class="glyphicon glyphicon-upload"></i>
+                                    <span>Start</span>
+                                </button>
+                                <button type="button" class="btn btn-warning cancel" data-ng-click="file.$cancel()" data-ng-hide="!file.$cancel">
+                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                    <span>Cancel</span>
+                                </button>
+                                <button data-ng-controller="FileDestroyController" type="button" class="btn btn-danger destroy" data-ng-click="file.$destroy()" data-ng-hide="!file.$destroy">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                    <span>Delete</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
-                
+
                 <button type="submit" ng-click="createPersona()" class="btn btn-primary">Crear persona</button>
+            </form>
+
+            <form enctype="multipart/form-data" action="webresources/personas/upload" method="POST">
+                <input type="file" name="file" id="filetest">
+                <button type="submit" value="enviar">Enviar</button>
             </form>
         </div>
     </div>

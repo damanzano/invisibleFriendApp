@@ -102,6 +102,10 @@ app.factory('appFactory', ['$http', function($http) {
             /* Call the juego/delete service*/
             return $http.delete(personasUrlBase + '/' + id);
         };
+        factory.uploadPersonaFoto = function(foto) {
+            /* Call the juegos/create service*/
+            return $http.post(personasUrlBase +'/upload', foto);
+        };
         
         
         return factory;
