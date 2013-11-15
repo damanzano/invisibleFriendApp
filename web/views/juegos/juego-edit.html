@@ -54,7 +54,7 @@
                 <input type="text" placeholder="Filtrar" class="form-control" ng-model="filtpersonas"/>
                 <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
             </div>
-            <div class="personas row">
+            <div class="aviable-personas row">
                 <div class="participante col-md-3 text-center" ng-repeat="persona in personas| filter:filtpersonas | orderBy:participante.personas.nombre">
                     <img class="participante-img img-circle img-thumbnail img-responsive" src="photos/{{persona.foto ? persona.foto:'no-image.png'}}" alt="{{participante.personas.nombre}} {{participante.personas.apellidos}}">
                     <p>

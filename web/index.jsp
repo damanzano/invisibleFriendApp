@@ -20,6 +20,12 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!--<link href="css/bootstrap-datepicker.css" rel="stylesheet">-->
         <link href="css/main.css" rel="stylesheet">
+         <!-- jQuery upload -->
+        <link rel="stylesheet" href="css/jquery.fileupload.css">
+        <link rel="stylesheet" href="css/jquery.fileupload-ui.css">
+        <!-- CSS adjustments for browsers with JavaScript disabled -->
+        <noscript><link rel="stylesheet" href="css/jquery.fileupload-noscript.css"></noscript>
+        <noscript><link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css"></noscript>
     </head>
     <body>
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -33,16 +39,12 @@
                     </button>
                     <a class="navbar-brand" href="#">Amigo Secreto</a>
                 </div>
+                <!-- navbar collapsible content -->
                 <div class="navbar-collapse collapse">
-                    <form class="navbar-form navbar-right">
-                        <div class="form-group">
-                            <input type="text" placeholder="Usuario" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" placeholder="Password" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-success">Ingresar</button>
-                    </form>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#/juegos">Juegos</a></li>
+                        <li><a href="#/personas">Personas</a></li>
+                    </ul>
                 </div><!--/.navbar-collapse -->
             </div>
         </div>
@@ -97,15 +99,20 @@
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="js/lib/bootstrap/bootstrap.min.js"></script>
         <!--<script src="js/lib/bootstrap/bootstrap-datepicker.js"></script>-->
+        <!-- jQuery upload files  -->
+        <!-- The basic File Upload plugin -->
+        <script src="js/lib/jquery-upload/jquery.fileupload.js"></script>
 
         <!-- Angular libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
         <script src="js/lib/angular/angular-animate.min.js"></script>
         <script src="js/lib/angular/angular-resource.min.js"></script>
         <script src="js/lib/angular/angular-route.min.js"></script>
+        
         <!-- App libs -->
         <script src="js/app.js"></script>
         <script src="js/factories.js"></script>
-        <script src="js/controllers.js"></script>
+        <script src="js/juegos-controller.js"></script>
+        <script src="js/personas-controller.js"></script>
     </body>
 </html>
