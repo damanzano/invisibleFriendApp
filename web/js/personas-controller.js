@@ -12,7 +12,8 @@ app.controller('personasController', ['$scope', '$routeParams', 'appFactory', fu
         $scope.personas = [];
         $scope.juegos = [];
         $scope.currentPersona;
-        
+        $scope.imagePreview;
+
 
         init();
         function init() {
@@ -33,7 +34,7 @@ app.controller('personasController', ['$scope', '$routeParams', 'appFactory', fu
                             } else {
                                 $scope.personas.push(personasCollection.personas);
                             }
-                        } 
+                        }
 
                         if (personaId > 0) {
                             getCurrentPersona(personaId);
@@ -43,7 +44,7 @@ app.controller('personasController', ['$scope', '$routeParams', 'appFactory', fu
                         $scope.status = 'Unable to load personas data: ' + error.message;
                     });
         }
-        
+
         function getCurrentPersona(personaId) {
             for (var i = 0; i < $scope.personas.length; i++) {
                 if ($scope.personas[i].numeroId == juegoId) {
@@ -64,7 +65,7 @@ app.controller('personasController', ['$scope', '$routeParams', 'appFactory', fu
                         });
             }
         }
-        
+
         $scope.updatePersona = function(persona) {
             appFactory.updateJuego(persona)
                     .success(function(data, status, headers, config) {
@@ -84,24 +85,34 @@ app.controller('personasController', ['$scope', '$routeParams', 'appFactory', fu
         };
 
         $scope.createPersona = function() {
-            var newPersona = {
-                
-            };
-            console.log(DemoFileUploadController.scope().file);
-            /*appFactory.createPersona(newPersona)
-                    .success(function(data, status, headers, config) {
-                        $scope.status = 'Inserted persona! Refreshing personas list.';
-                        var location = headers('Location');
-                        var parts = location.split('/');
-                        var newId = parts[6]
-                        newPersona.numeroId = newId;
-                        $scope.perosnas.push(newPersona);
+            //first call the oploaf image services
+            appFactory.uploadPersonaFoto($scope.imagePreview)
+                    .success(function(data, status, headers, confi) {
+                        //if the image was uploaded create the new Persona using the image's filename
+                        var newPersona = {
+                        };
+
+                        //call the create person service
+                        appFactory.createPersona(newPersona)
+                                .success(function(data, status, headers, config) {
+                                    $scope.status = 'Inserted persona! Refreshing personas list.';
+                                    var location = headers('Location');
+                                    var parts = location.split('/');
+                                    var newId = parts[6]
+                                    newPersona.numeroId = newId;
+                                    $scope.perosnas.push(newPersona);
+
+                                })
+                                .error(function(data, status, headers, config) {
+                                    $scope.status = 'Unable to insert juego: ' + error.message;
+                                    console.log(error.message);
+                                });
 
                     })
-                    .error(function(data, status, headers, config) {
-                        $scope.status = 'Unable to insert juego: ' + error.message;
-                        console.log(error.message);
-                    });*/
+                    .error(function(data, status, headers, confi) {
+                        console.log("There was a problem uploading your img, plese try again later");
+                    });
+
         };
 
         $scope.deleteJuego = function(personaId) {
@@ -122,10 +133,28 @@ app.controller('personasController', ['$scope', '$routeParams', 'appFactory', fu
         };
 
         $scope.addParticipante = function(persona) {
-            
+
         };
 
         $scope.deleteParticipante = function(participante) {
-            
+
+        };
+
+        $scope.fileNameChaged = function(input) {
+            if (input && input.files[0]) {
+                $scope.imagePreview = input.files[0];
+                console.log($scope.imagePreview);
+
+                var fileReader = new FileReader();
+                fileReader.onload = function(e) {
+                    jQuery('#img-preview').attr('src', e.target.result);
+                }
+
+                fileReader.readAsDataURL(input.files[0]);
+
+            } else {
+                // do some kind of visual feedback
+            }
+
         };
     }]);

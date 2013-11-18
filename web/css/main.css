@@ -5,15 +5,18 @@
 
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
-  padding-top: 50px;
-  padding-bottom: 20px;
-}
-.juegos-list{
-    margin-top: 20px;
+    padding-top: 50px;
+    padding-bottom: 20px;
 }
 .row{
     margin-top: 20px;
 }
+.juegos-list{
+    margin-top: 20px;
+}
+
+
+/**Participante module**/
 .participante{
     margin-bottom: 15px;
 }
@@ -24,4 +27,10 @@ body {
 .participante-place{}
 .toolbar .btn{
     margin-left: 3px;
+}
+
+/*Persona mudule*/
+.persona-img-preview{
+    height: 100px;
+    width: 100px;
 }

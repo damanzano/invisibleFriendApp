@@ -77,36 +77,18 @@
                             <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
                                 <i class="glyphicon glyphicon-plus"></i>
                                 <span>Add files...</span>
-                                <input type="file" name="files[]" ng-disabled="disabled">
+                                <input type="file" name="files[]" ng-disabled="disabled" id="files[]" onchange="angular.element(this).scope().fileNameChaged(this)" required>
                             </span>
-                            <button type="button" class="btn btn-primary start" data-ng-click="submit()">
-                                <i class="glyphicon glyphicon-upload"></i>
-                                <span>Start upload</span>
-                            </button>
-                            <button type="button" class="btn btn-warning cancel" data-ng-click="cancel()">
-                                <i class="glyphicon glyphicon-ban-circle"></i>
-                                <span>Cancel upload</span>
-                            </button>
-                            <!-- The global file processing state -->
-                            <span class="fileupload-process"></span>
                         </div>
-                        <!-- The global progress state -->
-                        <div class="col-lg-5 fade" data-ng-class="{in: active()}">
-                            <!-- The global progress bar -->
-                            <div class="progress progress-striped active" data-file-upload-progress="progress()"><div class="progress-bar progress-bar-success" data-ng-style="{width: num + '%'}"></div></div>
-                            <!-- The extended global progress state -->
-                            <div class="progress-extended">&nbsp;</div>
-                        </div>
+                        <img id="img-preview" class="persona-img-preview img-circle img-thumbnail" src="photos/no-image.png" alt="Your image"/>
                     </div>
-                   
-
                 </div>
 
                 <button type="submit" ng-click="createPersona()" class="btn btn-primary">Crear persona</button>
             </form>
-
+           
             <form enctype="multipart/form-data" action="webresources/personas/upload" method="POST">
-                <input type="file" name="file" id="filetest">
+                <input type="file" name="files[]" id="filetest">
                 <button type="submit" value="enviar">Enviar</button>
             </form>
         </div>

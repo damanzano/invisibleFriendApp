@@ -7,8 +7,7 @@ package co.edu.icesi.invisiblefriend.services;
 
 import co.edu.icesi.invisiblefriend.controllers.PersonasJpaController;
 import co.edu.icesi.invisiblefriend.entities.Personas;
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.multipart.FormDataParam;
+import com.sun.jersey.core.util.Base64;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,7 +30,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -130,27 +128,29 @@ public class PersonasRESTFacade {
 
     @POST
     @Path("/upload")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Consumes({"application/json"})
     @Produces({"application/json"})
-    public JSONObject uploadFoto(
-            @FormDataParam("files[]") InputStream uploadedInputStream,
-            @FormDataParam("files[]") FormDataContentDisposition fileDetail) {
-
-        String uploadedFileLocation = context.getRealPath("/") + context.getInitParameter("photos_directory") + "/" + fileDetail.getFileName();
-        // save it
-        writeToFile(uploadedInputStream, uploadedFileLocation);
-
-        System.out.println("File uploaded to : " + uploadedFileLocation);
-
-        //return Response.status(200).entity(output).build();
+    public JSONObject uploadFoto(JSONObject jsonFile) {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("name", fileDetail.getFileName());
-            jsonObject.put("size", fileDetail.getSize());
-            jsonObject.put("url", context.getContextPath() + context.getInitParameter("photos_directory") + "/" + fileDetail.getFileName());
+            //conver the jsonFile to a file Object and save it;
+            convertFile(jsonFile.getString("file"), jsonFile.getString("file_name"));
+            String uploadedFileLocation = context.getRealPath("/") + context.getInitParameter("photos_directory") + "/" + jsonFile.getString("name");
+            // save it
+            //writeToFile(uploadedInputStream, uploadedFileLocation);
 
+            System.out.println("File uploaded to : " + uploadedFileLocation);
+
+            //return Response.status(200).entity(output).build();
             
+
+            jsonObject.put("name", jsonFile.getString("name"));
+            jsonObject.put("size", jsonFile.getString("size"));
+            jsonObject.put("url", context.getContextPath() + context.getInitParameter("photos_directory") + "/" + jsonFile.getString("name"));
+
         } catch (JSONException ex) {
+            Logger.getLogger(PersonasRESTFacade.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(PersonasRESTFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
         return jsonObject;
@@ -178,6 +178,15 @@ public class PersonasRESTFacade {
             e.printStackTrace();
         }
 
+    }
+
+    private void convertFile(String file_string, String file_name) throws IOException {
+        byte[] bytes = Base64.decode(file_string);
+        File file = new File(context.getRealPath("/") + context.getInitParameter("photos_directory") + "/" + file_name);
+        FileOutputStream fop = new FileOutputStream(file);
+        fop.write(bytes);
+        fop.flush();
+        fop.close();
     }
 
 }
