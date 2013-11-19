@@ -72,25 +72,28 @@
                     <label for="ubicacion">Foto</label>
                     <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
                     <div class="row fileupload-buttonbar">
-                        <div class="col-lg-7">
+                        
+                        <div class="">
+                            <img id="img-preview" class="persona-img-preview img-circle img-thumbnail" src="photos/no-image.png" alt="Your image"/>
                             <!-- The fileinput-button span is used to style the file input field as button -->
                             <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
                                 <i class="glyphicon glyphicon-plus"></i>
-                                <span>Add files...</span>
-                                <input type="file" name="files[]" ng-disabled="disabled" id="files[]" onchange="angular.element(this).scope().fileNameChaged(this)" required>
+                                <span>Seleccionar archivo</span>
+                                <input type="file" name="files" ng-disabled="disabled" id="files" onchange="angular.element(this).scope().fileNameChaged(this)" required>
                             </span>
                         </div>
-                        <img id="img-preview" class="persona-img-preview img-circle img-thumbnail" src="photos/no-image.png" alt="Your image"/>
+                        
                     </div>
                 </div>
 
                 <button type="submit" ng-click="createPersona()" class="btn btn-primary">Crear persona</button>
             </form>
-           
+           <!--
             <form enctype="multipart/form-data" action="webresources/personas/upload" method="POST">
-                <input type="file" name="files[]" id="filetest">
+                <input type="file" name="files" id="filetest">
                 <button type="submit" value="enviar">Enviar</button>
             </form>
+           -->
         </div>
     </div>
 </div>

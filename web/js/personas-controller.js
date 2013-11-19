@@ -89,7 +89,18 @@ app.controller('personasController', ['$scope', '$routeParams', 'appFactory', fu
             appFactory.uploadPersonaFoto($scope.imagePreview)
                     .success(function(data, status, headers, confi) {
                         //if the image was uploaded create the new Persona using the image's filename
+                        var photoDirParts = data.url.split('/');
+                        var photoName= photoDirParts[3];
+                        
+                        console.log(photoDirParts[3]);
+                        
                         var newPersona = {
+                            nombre: newPersona.nombre
+                            , apellidos: newPersona.apellidos
+                            , correoElectronico: newPersona.correoElectronico
+                            , ubicacion: newPersona.ubicacion
+                            , sexo: newPersona.sexo
+                            , foto:photoName
                         };
 
                         //call the create person service

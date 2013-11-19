@@ -102,9 +102,19 @@ app.factory('appFactory', ['$http', function($http) {
             /* Call the juego/delete service*/
             return $http.delete(personasUrlBase + '/' + id);
         };
-        factory.uploadPersonaFoto = function(foto) {
+        factory.uploadPersonaFoto = function(photo) {
             /* Call the juegos/create service*/
-            return $http.post(personasUrlBase +'/upload', foto);
+            return $http({
+                method: 'POST'
+                , url: personasUrlBase +'/upload'
+                , data: { files:photo}
+                , headers: {'Content-Type': undefined}
+                , transformRequest: function(data){
+                    var formData = new FormData();
+                    formData.append('files', photo);
+                    return formData;
+                }
+            });
         };
         
         

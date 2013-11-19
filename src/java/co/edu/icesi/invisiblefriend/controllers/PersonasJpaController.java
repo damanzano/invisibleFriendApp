@@ -43,6 +43,8 @@ public class PersonasJpaController implements Serializable {
         }
         EntityManager em = null;
         try {
+            int numeroId = this.getPersonasCount();
+            personas.setNumeroId("" + (numeroId+1));
             em = getEntityManager();
             em.getTransaction().begin();
             Collection<Participantes> attachedParticipantesCollection = new ArrayList<Participantes>();
