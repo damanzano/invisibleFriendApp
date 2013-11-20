@@ -30,6 +30,9 @@ body {
 }
 
 /*Persona mudule*/
+.persona-img{
+    width: 160px;
+}
 .persona-img-preview{
     height: 100px;
     width: 100px;

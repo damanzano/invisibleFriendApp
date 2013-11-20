@@ -13,7 +13,8 @@ app.controller('personasController', ['$scope', '$routeParams', 'appFactory', fu
         $scope.juegos = [];
         $scope.currentPersona;
         $scope.imagePreview;
-
+        $scope.genders = [{id: 'M', desc: 'Masculino'}, {id: 'F', desc: 'Femenino'}];
+        $scope.selectedGender = $scope.genders[0];
 
         init();
         function init() {
@@ -47,9 +48,13 @@ app.controller('personasController', ['$scope', '$routeParams', 'appFactory', fu
 
         function getCurrentPersona(personaId) {
             for (var i = 0; i < $scope.personas.length; i++) {
-                if ($scope.personas[i].numeroId == juegoId) {
+                if ($scope.personas[i].numeroId == personaId) {
                     $scope.currentPersona = $scope.personas[i];
-                    getPersonas($scope.currentPersona);
+                    if($scope.currentPersona.sexo=='M'){
+                        $scope.selectedGender = $scope.genders[0];
+                    }else{
+                        $scope.selectedGender = $scope.genders[1];
+                    }
                     break;
                 }
             }
@@ -66,8 +71,34 @@ app.controller('personasController', ['$scope', '$routeParams', 'appFactory', fu
             }
         }
 
+        $scope.validatePersona = function(persona) {
+            persona.sexo = $scope.selectedGender.id;
+            //first upload the new image if it change
+            if ($scope.imagePreview != null) {
+                appFactory.uploadPersonaFoto($scope.imagePreview)
+                        .success(function(data, status, headers, confi) {
+                            //if the image was uploaded create the new Persona using the image's filename
+                            var photoDirParts = data.url.split('/');
+                            var photoName = photoDirParts[3];
+
+                            console.log(photoDirParts[3]);
+
+                            persona.foto = photoName;
+                            $scope.updatePersona(persona);
+
+                        })
+                        .error(function(data, status, headers, confi) {
+                            console.log("There was a problem uploading your img, plese try again later");
+                        });
+            } else {
+                $scope.updatePersona(persona);
+            }
+
+        };
+
         $scope.updatePersona = function(persona) {
-            appFactory.updateJuego(persona)
+            //call the update person service
+            appFactory.updatePersona(persona)
                     .success(function(data, status, headers, config) {
                         $scope.status = 'Updated juego! Refreshing the juegos list.';
 
@@ -82,41 +113,43 @@ app.controller('personasController', ['$scope', '$routeParams', 'appFactory', fu
                     .error(function(data, status, headers, config) {
                         //TODO Do someting when errors
                     });
+
         };
 
         $scope.createPersona = function() {
-            //first call the oploaf image services
+            //first call the opload image services
             appFactory.uploadPersonaFoto($scope.imagePreview)
                     .success(function(data, status, headers, confi) {
                         //if the image was uploaded create the new Persona using the image's filename
                         var photoDirParts = data.url.split('/');
-                        var photoName= photoDirParts[3];
-                        
+                        var photoName = photoDirParts[3];
+
                         console.log(photoDirParts[3]);
-                        
+
                         var newPersona = {
-                            nombre: newPersona.nombre
-                            , apellidos: newPersona.apellidos
-                            , correoElectronico: newPersona.correoElectronico
-                            , ubicacion: newPersona.ubicacion
-                            , sexo: newPersona.sexo
-                            , foto:photoName
+                            nombre: $scope.newPersona.nombre
+                            , apellidos: $scope.newPersona.apellidos
+                            , correoElectronico: $scope.newPersona.correoElectronico
+                            , ubicacion: $scope.newPersona.ubicacion
+                            , sexo: $scope.newPersona.sexo.id
+                            , foto: photoName
                         };
 
                         //call the create person service
                         appFactory.createPersona(newPersona)
                                 .success(function(data, status, headers, config) {
+                                    console.log(data);
                                     $scope.status = 'Inserted persona! Refreshing personas list.';
                                     var location = headers('Location');
                                     var parts = location.split('/');
                                     var newId = parts[6]
                                     newPersona.numeroId = newId;
-                                    $scope.perosnas.push(newPersona);
+                                    $scope.personas.push(newPersona);
 
                                 })
                                 .error(function(data, status, headers, config) {
-                                    $scope.status = 'Unable to insert juego: ' + error.message;
-                                    console.log(error.message);
+                                    $scope.status = 'Unable to insert persona: ' + status;
+                                    console.log(status);
                                 });
 
                     })
@@ -126,7 +159,7 @@ app.controller('personasController', ['$scope', '$routeParams', 'appFactory', fu
 
         };
 
-        $scope.deleteJuego = function(personaId) {
+        $scope.deletePersona = function(personaId) {
             appFactory.deleteJuego(personaId)
                     .success(function(data, status, headers, confi) {
                         $scope.status = 'Deleted persona! Refreshing customer list.';
@@ -154,7 +187,6 @@ app.controller('personasController', ['$scope', '$routeParams', 'appFactory', fu
         $scope.fileNameChaged = function(input) {
             if (input && input.files[0]) {
                 $scope.imagePreview = input.files[0];
-                console.log($scope.imagePreview);
 
                 var fileReader = new FileReader();
                 fileReader.onload = function(e) {

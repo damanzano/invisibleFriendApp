@@ -101,7 +101,7 @@
         <!--<script src="js/lib/bootstrap/bootstrap-datepicker.js"></script>-->
         
         <!-- Angular libraries -->
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
         <script src="js/lib/angular/angular-animate.min.js"></script>
         <script src="js/lib/angular/angular-resource.min.js"></script>
         <script src="js/lib/angular/angular-route.min.js"></script>

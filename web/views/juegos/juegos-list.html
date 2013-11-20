@@ -1,7 +1,7 @@
 <div class="juegos view">
     <div class="row">
         <h2>Juegos en curso</h2>
-        <div>
+        <section class="module-list">
             <div class="input-group">
                 <input type="text" placeholder="Filtrar" class="form-control" ng-model="filt"/>
                 <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
@@ -18,7 +18,7 @@
                         <th>Opciones</th>
                     </tr>
 
-                    <tr ng-repeat="juego in juegos | filter:filt | orderBy:numeroId">
+                    <tr ng-repeat="juego in juegos| filter:filt | orderBy:numeroId">
                         <td>{{ juego.numeroId}}</td>
                         <td>{{ juego.descripcion}}</td>
                         <td>{{ juego.fechaCreacion | date:'fullDate'}}</td>
@@ -28,7 +28,7 @@
                             <a class="btn btn-primary" href="#/juegos/{{juego.numeroId}}">
                                 <span class="glyphicon glyphicon-eye-open"></span> Detalles
                             </a>
-                            
+
                             <a class="btn btn-primary" href="#/juegos/edit/{{juego.numeroId}}">
                                 <span class="glyphicon glyphicon-edit"></span> Editar
                             </a>
@@ -36,7 +36,10 @@
                     </tr>
                 </table>
             </div>
-
+        </section>
+        
+        <h2>Crear nuevo juego</h2>
+        <section class="module-create">
             <!-- Creation Form -->
             <form role="form">
                 <div class="form-group">
@@ -53,6 +56,6 @@
                 </div>
                 <button type="submit" ng-click="createJuego()" class="btn btn-primary">Crear juego</button>
             </form>
-        </div>
+        </section>
     </div>
 </div>

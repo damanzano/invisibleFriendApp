@@ -80,6 +80,8 @@ public class PersonasRESTFacade {
             getJpaController().edit(entity);
             return Response.ok().build();
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
             return Response.notModified(ex.getMessage()).build();
         }
     }

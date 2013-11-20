@@ -29,11 +29,11 @@ app.config(['$routeProvider', function($routeProvider) {
                 })
                 .when('/personas/:personaId', {
                     controller: 'personasController',
-                    templateUrl: 'views/personas/personas-details.html'
+                    templateUrl: 'views/personas/persona-details.html'
                 })
-                .when('/personas/edit/:juegoId', {
+                .when('/personas/edit/:personaId', {
                     controller: 'personasController',
-                    templateUrl: 'views/personas/personas-edit.html'
+                    templateUrl: 'views/personas/persona-edit.html'
                 })
                 .otherwise({redirectTo: '/'});
     }]);
