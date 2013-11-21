@@ -44,7 +44,6 @@ public class PersonasJpaController implements Serializable {
         try {
             int numeroId = this.getPersonasCount();
             personas.setNumeroId("" + (numeroId + 1));
-            System.out.println("Creating persona " + personas.getNumeroId());
             em = getEntityManager();
             em.getTransaction().begin();
             Collection<Participantes> attachedParticipantesCollection = new ArrayList<Participantes>();
