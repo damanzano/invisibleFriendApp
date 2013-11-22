@@ -43,6 +43,8 @@ public class ParticipantesJpaController implements Serializable {
     public void create(Participantes participantes) throws PreexistingEntityException, Exception {
         if (participantes.getParticipantesPK() == null) {
             participantes.setParticipantesPK(new ParticipantesPK());
+            participantes.getParticipantesPK().setNumeroJuego(participantes.getJuego().getNumeroId());
+            participantes.getParticipantesPK().setNumeroPersona(participantes.getPersonas().getNumeroId());
         }
         if (participantes.getEsAmigoDeCollection() == null) {
             participantes.setEsAmigoDeCollection(new ArrayList<EsAmigoDe>());
@@ -50,8 +52,7 @@ public class ParticipantesJpaController implements Serializable {
         if (participantes.getEsAmigoDeCollection1() == null) {
             participantes.setEsAmigoDeCollection1(new ArrayList<EsAmigoDe>());
         }
-        participantes.getParticipantesPK().setNumeroJuego(participantes.getJuego().getNumeroId());
-        participantes.getParticipantesPK().setNumeroPersona(participantes.getPersonas().getNumeroId());
+        
         EntityManager em = null;
         try {
             em = getEntityManager();

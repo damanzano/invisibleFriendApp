@@ -18,7 +18,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--<link href="css/bootstrap-datepicker.css" rel="stylesheet">-->
         <link href="css/main.css" rel="stylesheet">
+        <!-- jQuery upload -->
+        <link rel="stylesheet" href="css/jquery.fileupload.css">
+        <link rel="stylesheet" href="css/jquery.fileupload-ui.css">
+        <!-- CSS adjustments for browsers with JavaScript disabled -->
+        <noscript><link rel="stylesheet" href="css/jquery.fileupload-noscript.css"></noscript>
+        <noscript><link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css"></noscript>
     </head>
     <body>
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -32,55 +39,21 @@
                     </button>
                     <a class="navbar-brand" href="#">Amigo Secreto</a>
                 </div>
+                <!-- navbar collapsible content -->
                 <div class="navbar-collapse collapse">
-                    <form class="navbar-form navbar-right">
-                        <div class="form-group">
-                            <input type="text" placeholder="Usuario" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" placeholder="Password" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-success">Ingresar</button>
-                    </form>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#/juegos">Juegos</a></li>
+                        <li><a href="#/personas">Personas</a></li>
+                    </ul>
                 </div><!--/.navbar-collapse -->
             </div>
         </div>
 
-        <!-- Intro -->
-        <div class="jumbotron">
-            <div class="container">
-                <h1>Bienvenido a nuestra App de Amigo Secreto</h1>
-                <p>A coninuaci&oacute;n encontraras los juegos activos en este momento</p>
-                <!--<p><a class="btn btn-primary btn-lg" role="button">Learn more »</a></p>-->
-            </div>
-        </div>
-
         <!-- content -->
+        <div ng-view=""></div>
+
         <div class="container">
-            <div ng-view=""></div>
-            <!-- Example row of columns -->
-            <!--
-            <div class="row">
-                <div class="col-md-4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-                </div>
-                <div class="col-md-4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-                </div>
-                <div class="col-md-4">
-                    <h2>Heading</h2>
-                    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                    <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-                </div>
-            </div>
-            -->
-
             <hr>
-
             <footer>
                 <p>© SYRI Desarrollo de Sistemas 2013</p>
             </footer>
@@ -95,15 +68,19 @@
 
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="js/lib/bootstrap/bootstrap.min.js"></script>
+        <!--<script src="js/lib/bootstrap/bootstrap-datepicker.js"></script>-->
 
         <!-- Angular libraries -->
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
-        <script src="js/lib/angular/angular-animate.js"></script>
-        <script src="js/lib/angular/angular-resource.js"></script>
-        <script src="js/lib/angular/angular-route.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
+        <script src="js/lib/angular/angular-animate.min.js"></script>
+        <script src="js/lib/angular/angular-resource.min.js"></script>
+        <script src="js/lib/angular/angular-route.min.js"></script>
+
+
         <!-- App libs -->
         <script src="js/app.js"></script>
         <script src="js/factories.js"></script>
-        <script src="js/controllers.js"></script>
+        <script src="js/juegos-controller.js"></script>
+        <script src="js/personas-controller.js"></script>
     </body>
 </html>

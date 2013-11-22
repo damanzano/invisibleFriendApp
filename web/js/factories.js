@@ -80,6 +80,43 @@ app.factory('appFactory', ['$http', function($http) {
             return $http.delete(particUrlBase + '/' + id);
         };
         
+        // Personas services
+        factory.getPersonas = function() {
+            return $http.get(personasUrlBase);
+        };
+        factory.countPersonas = function() {
+            return $http.get(personasUrlBase + '/count');
+        };
+        factory.getPersona = function(id) {
+            return $http.get(personasUrlBase + '/' + id);
+        };
+        factory.createPersona = function(persona) {
+            /* Call the juegos/create service*/
+            return $http.post(personasUrlBase, persona);
+        };
+        factory.updatePersona = function(persona) {
+            /* Call the juegos/edit service*/
+            return $http.put(personasUrlBase, persona);
+        };
+        factory.deletePersona = function(id) {
+            /* Call the juego/delete service*/
+            return $http.delete(personasUrlBase + '/' + id);
+        };
+        factory.uploadPersonaFoto = function(photo) {
+            /* Call the juegos/create service*/
+            return $http({
+                method: 'POST'
+                , url: personasUrlBase +'/upload'
+                , data: { files:photo}
+                , headers: {'Content-Type': undefined}
+                , transformRequest: function(data){
+                    var formData = new FormData();
+                    formData.append('files', photo);
+                    return formData;
+                }
+            });
+        };
+        
         
         return factory;
     }]);
