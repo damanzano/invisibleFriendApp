@@ -96,6 +96,7 @@ public class Participantes implements Serializable {
         this.personas = personas;
     }
 
+    @XmlTransient
     public Juego getJuego() {
         return juego;
     }

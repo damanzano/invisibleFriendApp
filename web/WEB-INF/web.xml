@@ -23,8 +23,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Juego</web-resource-name>
-            <url-pattern>/webresources/juego</url-pattern>
-            <http-method>GET</http-method>
+            <url-pattern>/webresources/juegos</url-pattern>
             <http-method>POST</http-method>
             <http-method>PUT</http-method>
         </web-resource-collection>
@@ -49,4 +48,10 @@
         <persistence-unit-ref-name>persistence-factory</persistence-unit-ref-name>
         <persistence-unit-name>invisibleFriendAppPU</persistence-unit-name>
     </persistence-unit-ref>
+    
+    <context-param>
+    <description>Directory where photos are stored</description>
+    <param-name>photos_directory</param-name>
+    <param-value>photos</param-value>
+  </context-param>
 </web-app>

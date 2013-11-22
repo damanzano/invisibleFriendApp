@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package co.edu.icesi.invisiblefriend.controllers;
 
 import co.edu.icesi.controllers.invisiblefriend.exceptions.IllegalOrphanException;
@@ -43,6 +42,8 @@ public class PersonasJpaController implements Serializable {
         }
         EntityManager em = null;
         try {
+            int numeroId = this.getPersonasCount();
+            personas.setNumeroId("" + (numeroId + 1));
             em = getEntityManager();
             em.getTransaction().begin();
             Collection<Participantes> attachedParticipantesCollection = new ArrayList<Participantes>();
@@ -83,33 +84,41 @@ public class PersonasJpaController implements Serializable {
             Collection<Participantes> participantesCollectionOld = persistentPersonas.getParticipantesCollection();
             Collection<Participantes> participantesCollectionNew = personas.getParticipantesCollection();
             List<String> illegalOrphanMessages = null;
-            for (Participantes participantesCollectionOldParticipantes : participantesCollectionOld) {
-                if (!participantesCollectionNew.contains(participantesCollectionOldParticipantes)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
+            if (participantesCollectionNew != null) {
+                for (Participantes participantesCollectionOldParticipantes : participantesCollectionOld) {
+                    if (!participantesCollectionNew.contains(participantesCollectionOldParticipantes)) {
+                        if (illegalOrphanMessages == null) {
+                            illegalOrphanMessages = new ArrayList<String>();
+                        }
+                        illegalOrphanMessages.add("You must retain Participantes " + participantesCollectionOldParticipantes + " since its personas field is not nullable.");
                     }
-                    illegalOrphanMessages.add("You must retain Participantes " + participantesCollectionOldParticipantes + " since its personas field is not nullable.");
                 }
+
+                if (illegalOrphanMessages != null) {
+                    throw new IllegalOrphanException(illegalOrphanMessages);
+                }
+                Collection<Participantes> attachedParticipantesCollectionNew = new ArrayList<Participantes>();
+                for (Participantes participantesCollectionNewParticipantesToAttach : participantesCollectionNew) {
+                    participantesCollectionNewParticipantesToAttach = em.getReference(participantesCollectionNewParticipantesToAttach.getClass(), participantesCollectionNewParticipantesToAttach.getParticipantesPK());
+                    attachedParticipantesCollectionNew.add(participantesCollectionNewParticipantesToAttach);
+                }
+
+                participantesCollectionNew = attachedParticipantesCollectionNew;
+                personas.setParticipantesCollection(participantesCollectionNew);
+            } else {
+                personas.setParticipantesCollection(participantesCollectionOld);
             }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Collection<Participantes> attachedParticipantesCollectionNew = new ArrayList<Participantes>();
-            for (Participantes participantesCollectionNewParticipantesToAttach : participantesCollectionNew) {
-                participantesCollectionNewParticipantesToAttach = em.getReference(participantesCollectionNewParticipantesToAttach.getClass(), participantesCollectionNewParticipantesToAttach.getParticipantesPK());
-                attachedParticipantesCollectionNew.add(participantesCollectionNewParticipantesToAttach);
-            }
-            participantesCollectionNew = attachedParticipantesCollectionNew;
-            personas.setParticipantesCollection(participantesCollectionNew);
             personas = em.merge(personas);
-            for (Participantes participantesCollectionNewParticipantes : participantesCollectionNew) {
-                if (!participantesCollectionOld.contains(participantesCollectionNewParticipantes)) {
-                    Personas oldPersonasOfParticipantesCollectionNewParticipantes = participantesCollectionNewParticipantes.getPersonas();
-                    participantesCollectionNewParticipantes.setPersonas(personas);
-                    participantesCollectionNewParticipantes = em.merge(participantesCollectionNewParticipantes);
-                    if (oldPersonasOfParticipantesCollectionNewParticipantes != null && !oldPersonasOfParticipantesCollectionNewParticipantes.equals(personas)) {
-                        oldPersonasOfParticipantesCollectionNewParticipantes.getParticipantesCollection().remove(participantesCollectionNewParticipantes);
-                        oldPersonasOfParticipantesCollectionNewParticipantes = em.merge(oldPersonasOfParticipantesCollectionNewParticipantes);
+            if (participantesCollectionNew != null) {
+                for (Participantes participantesCollectionNewParticipantes : participantesCollectionNew) {
+                    if (!participantesCollectionOld.contains(participantesCollectionNewParticipantes)) {
+                        Personas oldPersonasOfParticipantesCollectionNewParticipantes = participantesCollectionNewParticipantes.getPersonas();
+                        participantesCollectionNewParticipantes.setPersonas(personas);
+                        participantesCollectionNewParticipantes = em.merge(participantesCollectionNewParticipantes);
+                        if (oldPersonasOfParticipantesCollectionNewParticipantes != null && !oldPersonasOfParticipantesCollectionNewParticipantes.equals(personas)) {
+                            oldPersonasOfParticipantesCollectionNewParticipantes.getParticipantesCollection().remove(participantesCollectionNewParticipantes);
+                            oldPersonasOfParticipantesCollectionNewParticipantes = em.merge(oldPersonasOfParticipantesCollectionNewParticipantes);
+                        }
                     }
                 }
             }
@@ -207,5 +216,5 @@ public class PersonasJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

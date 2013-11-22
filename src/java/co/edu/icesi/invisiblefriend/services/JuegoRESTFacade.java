@@ -26,7 +26,7 @@ import javax.ws.rs.core.Response;
  *
  * @author David Andrés Maznzano Herrera <damanzano>
  */
-@Path("juego")
+@Path("juegos")
 public class JuegoRESTFacade {
     private EntityManagerFactory getEntityManagerFactory() throws NamingException {
         //return (EntityManagerFactory) new InitialContext().lookup("java:comp/env/persistence-factory");
@@ -46,7 +46,7 @@ public class JuegoRESTFacade {
     }
     
     @POST
-    @Consumes({"application/xml", "application/json"})
+    @Consumes({"application/json", "application/xml"})
     public Response create(Juego entity) {
         try {
             getJpaController().create(entity);
@@ -86,7 +86,7 @@ public class JuegoRESTFacade {
     }
 
     @GET
-    @Produces({"application/xml", "application/json"})
+    @Produces({"application/json", "application/xml"})
     public List<Juego> findAll() {
         return getJpaController().findJuegoEntities();
     }

@@ -1,0 +1,62 @@
+<div class="container">
+    <div class="persona view">
+        <div class="toolbar">
+            <a class="btn btn-danger pull-right" href="#/personas/{{currentPersona.numeroId}}"><span class="glyphicon glyphicon-edit"></span> Cerrar</a>
+            <button class="btn btn-warning pull-right" ng-click="validatePersona(currentPersona)"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button>
+        </div>
+
+        <h2>Editar persona ({{ currentPersona.numeroId}}) {{ currentPersona.nombre}} {{currentPersona.apellidos}}</h2>
+
+        <div class="persona-details">
+            <section class="module-create">
+                <!-- Creation Form -->
+                <form role="form" enctype="multipart/form-data" method="POST" >
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" ng-model="currentPersona.nombre" class="form-control" id="nombre" placeholder="Ingresa el nombre" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="apellidos">Apellidos</label>
+                        <input type="text" ng-model="currentPersona.apellidos" class="form-control" id="apellidos" placeholder="Ingresa los apellidos" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="correoElectronico">Correo electr&oacute;nico</label>
+                        <input type="email" ng-model="currentPersona.correoElectronico" class="form-control" id="correoElectronico" placeholder="correo@coreo.com" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="ubicacion">Ubicaci&oacute;n</label>
+                        <input type="text" ng-model="currentPersona.ubicacion" class="form-control" id="ubicacion" placeholder="Ingresa al ubicación" required />
+                    </div>
+                    <div class="form-group" >
+                        <label for="sexo">Género</label>
+                        <select class="form-control" ng-model="selectedGender" ng-options="gender.desc for gender in genders" id="sexo" name="sexo" required></select>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="ubicacion">Foto</label>
+                        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                        <div class="row fileupload-buttonbar">
+
+                            <div class="">
+                                <img id="img-preview" class="persona-img-preview img-circle img-thumbnail" src="photos/{{currentPersona.foto}}" alt="Your image"/>
+                                <!-- The fileinput-button span is used to style the file input field as button -->
+                                <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <span>Seleccionar archivo</span>
+                                    <input type="file" name="files" ng-disabled="disabled" id="files" onchange="angular.element(this).scope().fileNameChaged(this)" required>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+                <!--
+                 <form enctype="multipart/form-data" action="webresources/personas/upload" method="POST">
+                     <input type="file" name="files" id="filetest">
+                     <button type="submit" value="enviar">Enviar</button>
+                 </form>
+                -->
+            </section>
+        </div>
+    </div>
+</div>

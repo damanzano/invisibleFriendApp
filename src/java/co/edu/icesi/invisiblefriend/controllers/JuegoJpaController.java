@@ -43,8 +43,11 @@ public class JuegoJpaController implements Serializable {
         }
         EntityManager em = null;
         try {
+            int numeroId = this.getJuegoCount();
+            juego.setNumeroId("" + (numeroId+1));
+            System.out.println("Creating juego "+juego.getNumeroId());
             em = getEntityManager();
-            em.getTransaction().begin();
+            em.getTransaction().begin();            
             Collection<Participantes> attachedParticipantesCollection = new ArrayList<Participantes>();
             for (Participantes participantesCollectionParticipantesToAttach : juego.getParticipantesCollection()) {
                 participantesCollectionParticipantesToAttach = em.getReference(participantesCollectionParticipantesToAttach.getClass(), participantesCollectionParticipantesToAttach.getParticipantesPK());
