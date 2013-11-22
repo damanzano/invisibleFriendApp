@@ -2,6 +2,7 @@
     Document   : index
     Created on : 1/11/2013, 10:40:49 AM
     Author     : 14620701
+    Version    : 1.0.0 - RC1
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
