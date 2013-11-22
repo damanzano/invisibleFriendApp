@@ -9,7 +9,7 @@ app.config(['$routeProvider', function($routeProvider) {
         $routeProvider
                 .when('/', {
                     controller: 'juegosController',
-                    templateUrl: 'views/juegos/juegos-list.html'
+                    templateUrl: 'views/main.html'
                 })
                 .when('/juegos', {
                     controller: 'juegosController',

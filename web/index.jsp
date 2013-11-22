@@ -20,7 +20,7 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!--<link href="css/bootstrap-datepicker.css" rel="stylesheet">-->
         <link href="css/main.css" rel="stylesheet">
-         <!-- jQuery upload -->
+        <!-- jQuery upload -->
         <link rel="stylesheet" href="css/jquery.fileupload.css">
         <link rel="stylesheet" href="css/jquery.fileupload-ui.css">
         <!-- CSS adjustments for browsers with JavaScript disabled -->
@@ -49,41 +49,11 @@
             </div>
         </div>
 
-        <!-- Intro -->
-        <div class="jumbotron">
-            <div class="container">
-                <h1>Bienvenido a nuestra App de Amigo Secreto</h1>
-                <p>A continuaci&oacute;n encontraras los juegos activos en este momento</p>
-                <!--<p><a class="btn btn-primary btn-lg" role="button">Learn more »</a></p>-->
-            </div>
-        </div>
-
         <!-- content -->
+        <div ng-view=""></div>
+
         <div class="container">
-            <div ng-view=""></div>
-            <!-- Example row of columns -->
-            <!--
-            <div class="row">
-                <div class="col-md-4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-                </div>
-                <div class="col-md-4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-                </div>
-                <div class="col-md-4">
-                    <h2>Heading</h2>
-                    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                    <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-                </div>
-            </div>
-            -->
-
             <hr>
-
             <footer>
                 <p>© SYRI Desarrollo de Sistemas 2013</p>
             </footer>
@@ -95,18 +65,18 @@
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/lib/jquery/jquery-1.10.2.min.js"><\/script>')</script>
-        
+
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="js/lib/bootstrap/bootstrap.min.js"></script>
         <!--<script src="js/lib/bootstrap/bootstrap-datepicker.js"></script>-->
-        
+
         <!-- Angular libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
         <script src="js/lib/angular/angular-animate.min.js"></script>
         <script src="js/lib/angular/angular-resource.min.js"></script>
         <script src="js/lib/angular/angular-route.min.js"></script>
-       
-        
+
+
         <!-- App libs -->
         <script src="js/app.js"></script>
         <script src="js/factories.js"></script>
