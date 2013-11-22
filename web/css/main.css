@@ -22,6 +22,7 @@ body {
 }
 .participante-img{
     width: 100px;
+    height: 100px;
 }
 .participante-name{
     font-weight: bold;
@@ -34,6 +35,7 @@ body {
 /*Persona mudule*/
 .persona-img{
     width: 160px;
+    height: 160px;
 }
 .persona-img-preview{
     height: 100px;
