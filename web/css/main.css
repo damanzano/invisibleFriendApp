@@ -23,7 +23,9 @@ body {
 .participante-img{
     width: 100px;
 }
-.participante-name{}
+.participante-name{
+    font-weight: bold;
+}
 .participante-place{}
 .toolbar .btn{
     margin-left: 3px;

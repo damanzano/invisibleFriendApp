@@ -23,7 +23,7 @@
             <div class="participante col-md-3 text-center" ng-repeat="participante in currentJuego.participantesCollection| filter:filt | orderBy:participante.personas.nombre">
                 <img class="participante-img img-circle img-thumbnail img-responsive" src="photos/{{participante.personas.foto? participante.personas.foto:'no-image.png'}}" alt="{{participante.personas.nombre}} {{participante.personas.apellidos}}">
                 <p>
-                    <span class="participante-name lead">{{participante.personas.nombre}} {{participante.personas.apellidos}}</span>
+                    <span class="participante-name">{{participante.personas.nombre}} {{participante.personas.apellidos}}</span>
                     <br/>
                     <span class="participante-place"><small>{{participante.personas.ubicacion}}</small></span>
                 </p>
