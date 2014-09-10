@@ -6,6 +6,7 @@
 package co.edu.icesi.invisiblefriend.controllers;
 
 import co.edu.icesi.controllers.invisiblefriend.exceptions.IllegalOrphanException;
+import co.edu.icesi.controllers.invisiblefriend.exceptions.LoginErrorException;
 import co.edu.icesi.controllers.invisiblefriend.exceptions.NonexistentEntityException;
 import co.edu.icesi.controllers.invisiblefriend.exceptions.PreexistingEntityException;
 import java.io.Serializable;
@@ -35,7 +36,10 @@ public class PersonasJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-
+    public void login(Personas personas) throws LoginErrorException, Exception{
+    
+    }
+    
     public void create(Personas personas) throws PreexistingEntityException, Exception {
         if (personas.getParticipantesCollection() == null) {
             personas.setParticipantesCollection(new ArrayList<Participantes>());

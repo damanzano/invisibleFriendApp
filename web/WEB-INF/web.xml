@@ -16,10 +16,12 @@
         -->
         <load-on-startup>1</load-on-startup>
     </servlet>
+    
     <servlet-mapping>
         <servlet-name>ServletAdaptor</servlet-name>
         <url-pattern>/webresources/*</url-pattern>
     </servlet-mapping>
+    
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Juego</web-resource-name>

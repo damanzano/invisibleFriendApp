@@ -83,5 +83,6 @@
         <script src="js/factories.js"></script>
         <script src="js/juegos-controller.js"></script>
         <script src="js/personas-controller.js"></script>
+        <script src="js/login-controller.js"></script>
     </body>
 </html>
