@@ -18,6 +18,7 @@ app.factory('appFactory', ['$http', function($http) {
         var particUrlBase = 'webresources/participantes';
         var personasUrlBase = 'webresources/personas';
         var amigosdeUrlBase = 'webresources/amigosde';
+        var loginUrlBase = 'webresources/login';
 
         var juegos = [
             {numeroId: '1', descripcion: 'Desarrollo cunpleaños', fechaCreacion: '2013-10-01', fechaInicial: '2013-10-01', fechaFinal: '2013-11-06'}
@@ -115,6 +116,16 @@ app.factory('appFactory', ['$http', function($http) {
                     return formData;
                 }
             });
+        };
+        factory.login=function (person){
+          var $promise = $http.post(loginUrlBase, person);
+          $promise.then(function(mdg){
+             if(msg.data=="succes"){
+                 console.log("success login");
+             }else{
+                 console.log("error login");
+             }
+          });
         };
         
         

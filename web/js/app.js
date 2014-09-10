@@ -35,6 +35,10 @@ app.config(['$routeProvider', function($routeProvider) {
                     controller: 'personasController',
                     templateUrl: 'views/personas/persona-edit.html'
                 })
+                .when('/login', {
+                    controller: 'loginController',
+                    templateUrl: 'views/authentication/login.html'
+                })
                 .otherwise({redirectTo: '/'});
     }]);
 

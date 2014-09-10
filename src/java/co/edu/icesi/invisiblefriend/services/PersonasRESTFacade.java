@@ -64,6 +64,17 @@ public class PersonasRESTFacade {
 
     @POST
     @Consumes({"application/xml", "application/json"})
+    public Response login(Personas entity) {
+        try {
+            getJpaController().login(entity);
+            return Response.ok().build();
+        } catch (Exception ex) {
+            return Response.noContent().build();
+        }
+    }
+    
+    @POST
+    @Consumes({"application/xml", "application/json"})
     public Response create(Personas entity) {
         try {
             getJpaController().create(entity);
