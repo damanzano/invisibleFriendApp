@@ -7,9 +7,11 @@
 package co.edu.icesi.invisiblefriend.entities;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.repackaged.com.google.common.collect.HashBiMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,7 +41,7 @@ public class Game {
     @Basic
     private ArrayList players;
     @Basic
-    private ArrayList friends;
+    private HashMap friends;
 
     public Key getKey() {
         return key;
@@ -97,13 +99,11 @@ public class Game {
         this.players = players;
     }
 
-    public ArrayList getFriends() {
+    public HashMap getFriends() {
         return friends;
     }
 
-    public void setFriends(ArrayList friends) {
+    public void setFriends(HashMap friends) {
         this.friends = friends;
     }
-    
-    
 }
