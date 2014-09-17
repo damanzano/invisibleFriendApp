@@ -39,6 +39,16 @@
         classpathref="project.classpath"
         debug="on" />
   </target>
+  
+  <target name="datanucleusenhance" depends="compile"
+      description="Performs enhancement on compiled data classes.">
+      <enhance_war war="war">
+              <args>
+              <arg value="-enhancerVersion"/>
+              <arg value="v2"/>
+          </args>
+      </enhance_war>
+  </target>
 
   <target name="runserver" depends="compile"
       description="Starts the development server.">
