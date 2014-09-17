@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package co.edu.icesi.invisiblefriend.restservices;
 
 import co.edu.icesi.invisiblefriend.controllers.GameJpaController;
@@ -25,14 +24,15 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author David Andrés Maznzano Herrera <damanzano>
+ * @author David Andrés Manzano Herrera <damanzano>
  */
 @Path("/games")
 public class GameRESTFacade {
+
     private EntityManagerFactory getEntityManagerFactory() throws NamingException {
         return Persistence.createEntityManagerFactory("invisibleFriendAppPU");
     }
-    
+
     private GameJpaController getJpaController() {
         try {
             return new GameJpaController(getEntityManagerFactory());
@@ -40,22 +40,22 @@ public class GameRESTFacade {
             throw new RuntimeException(ex);
         }
     }
-    
+
     @GET
-    @Produces({"application/json", "application/xml"})
+    @Produces({"application/json"})
     public List<Game> findAll() {
         return getJpaController().find();
     }
-    
+
     @GET
     @Path("{id}")
-    @Produces({"application/xml", "application/json"})
+    @Produces({"application/json"})
     public Game find(@PathParam("id") String id) {
         return getJpaController().find(id);
     }
-    
+
     @POST
-    @Consumes({"application/json", "application/xml"})
+    @Consumes({"application/json"})
     public Response create(Game entity) {
         try {
             getJpaController().create(entity);
@@ -66,7 +66,7 @@ public class GameRESTFacade {
     }
 
     @PUT
-    @Consumes({"application/xml", "application/json"})
+    @Consumes({"application/json"})
     public Response edit(Game entity) {
         try {
             getJpaController().edit(entity);
@@ -86,7 +86,7 @@ public class GameRESTFacade {
             return Response.notModified(ex.getMessage()).build();
         }
     }
-    
+
     @GET
     @Path("count")
     @Produces({"application/json"})

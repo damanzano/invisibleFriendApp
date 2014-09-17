@@ -3,6 +3,8 @@
   
     <persistence-unit name="invisibleFriendAppPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.datanucleus.api.jpa.PersistenceProviderImpl</provider>
+        <class>co.edu.icesi.invisiblefriend.entities.Game</class>
+        <class>co.edu.icesi.invisiblefriend.entities.Player</class>
         <properties>
             <property name="datanucleus.appengine.datastoreReadConsistency" value="EVENTUAL" />
             <property name="datanucleus.NontransactionalRead" value="true"/>

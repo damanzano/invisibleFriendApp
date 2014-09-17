@@ -5,7 +5,9 @@
  */
 package co.edu.icesi.invisiblefriend.controllers;
 
+import co.edu.icesi.controllers.invisiblefriend.exceptions.PreexistingEntityException;
 import co.edu.icesi.invisiblefriend.entities.Game;
+import com.google.appengine.api.datastore.Key;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -15,7 +17,7 @@ import javax.persistence.criteria.CriteriaQuery;
 
 /**
  *
- * @author David Andrés Maznzano Herrera <damanzano>
+ * @author David Andrés Manzano Herrera <damanzano>
  */
 public class GameJpaController implements Serializable {
     
@@ -26,7 +28,7 @@ public class GameJpaController implements Serializable {
     }
     
     public GameJpaController(EntityManagerFactory entityManagerFactory) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.emf = entityManagerFactory;
     }
 
     public List<Game> find() {
@@ -57,8 +59,24 @@ public class GameJpaController implements Serializable {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void create(Game entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void create(Game entity) throws PreexistingEntityException, Exception {
+        
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.persist(entity);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findOne(entity.getKey()) != null) {
+                throw new PreexistingEntityException("Game " + entity + " already exists.", ex);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     public void edit(Game entity) {
@@ -70,6 +88,10 @@ public class GameJpaController implements Serializable {
     }
 
     public Object getCount() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private Object findOne(Key key) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

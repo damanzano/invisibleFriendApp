@@ -5,6 +5,7 @@
  */
 package co.edu.icesi.invisiblefriend.controllers;
 
+import co.edu.icesi.controllers.invisiblefriend.exceptions.PreexistingEntityException;
 import co.edu.icesi.invisiblefriend.entities.Player;
 import com.google.appengine.api.datastore.Key;
 import java.io.Serializable;
@@ -13,10 +14,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
- * @author David Andrés Maznzano Herrera <damanzano>
+ * @author David Andrés Manzano Herrera <damanzano>
  */
 public class PlayerJpaController implements Serializable {
 
@@ -27,7 +29,7 @@ public class PlayerJpaController implements Serializable {
     }
 
     public PlayerJpaController(EntityManagerFactory entityManagerFactory) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.emf = entityManagerFactory;
     }
 
     public List<Player> find() {
@@ -64,8 +66,23 @@ public class PlayerJpaController implements Serializable {
         }
     }
 
-    public void create(Player entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void create(Player entity) throws PreexistingEntityException, Exception {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.persist(entity);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findOne(entity.getKey()) != null) {
+                throw new PreexistingEntityException("Player " + entity + " already exists.", ex);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     public void edit(Player entity) {
@@ -77,6 +94,19 @@ public class PlayerJpaController implements Serializable {
     }
 
     public Object getCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<Player> rt = cq.from(Player.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+
+    private Object findOne(Key key) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

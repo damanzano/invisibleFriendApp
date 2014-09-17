@@ -16,7 +16,7 @@ import javax.persistence.Id;
 
 /**
  *
- * @author David Andrés Maznzano Herrera <damanzano>
+ * @author David Andrés Manzano Herrera <damanzano>
  */
 @Entity
 public class Player {
@@ -61,7 +61,4 @@ public class Player {
     public void setLocation(String location) {
         this.location = location;
     }
-    
-    
-    
 }

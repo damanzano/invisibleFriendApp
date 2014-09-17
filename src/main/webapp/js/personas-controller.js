@@ -5,7 +5,7 @@
 /**
  * Created on : 14-nov-2013, 16:22:00
  * Personas entity controller
- * @author David Andrés Maznzano Herrera <damanzano>
+ * @author David Andrés Manzano Herrera <damanzano>
  */
 app.controller('personasController', ['$scope', '$routeParams', 'appFactory', function($scope, $routeParams, appFactory) {
         $scope.status;

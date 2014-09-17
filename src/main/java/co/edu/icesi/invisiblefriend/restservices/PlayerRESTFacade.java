@@ -24,14 +24,15 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author David Andrés Maznzano Herrera <damanzano>
+ * @author David Andrés Manzano Herrera <damanzano>
  */
 @Path("/players")
 public class PlayerRESTFacade {
-  private EntityManagerFactory getEntityManagerFactory() throws NamingException {
+
+    private EntityManagerFactory getEntityManagerFactory() throws NamingException {
         return Persistence.createEntityManagerFactory("invisibleFriendAppPU");
     }
-    
+
     private PlayerJpaController getJpaController() {
         try {
             return new PlayerJpaController(getEntityManagerFactory());
@@ -39,22 +40,22 @@ public class PlayerRESTFacade {
             throw new RuntimeException(ex);
         }
     }
-    
+
     @GET
-    @Produces({"application/json", "application/xml"})
+    @Produces({"application/json"})
     public List<Player> findAll() {
         return getJpaController().find();
     }
-    
+
     @GET
     @Path("{id}")
-    @Produces({"application/xml", "application/json"})
+    @Produces({"application/json"})
     public Player find(@PathParam("id") String id) {
         return getJpaController().find(id);
     }
-    
+
     @POST
-    @Consumes({"application/json", "application/xml"})
+    @Consumes({"application/json"})
     public Response create(Player entity) {
         try {
             getJpaController().create(entity);
@@ -65,7 +66,7 @@ public class PlayerRESTFacade {
     }
 
     @PUT
-    @Consumes({"application/xml", "application/json"})
+    @Consumes({"application/json"})
     public Response edit(Player entity) {
         try {
             getJpaController().edit(entity);
@@ -85,7 +86,7 @@ public class PlayerRESTFacade {
             return Response.notModified(ex.getMessage()).build();
         }
     }
-    
+
     @GET
     @Path("count")
     @Produces({"application/json"})

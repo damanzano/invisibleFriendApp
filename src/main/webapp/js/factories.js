@@ -5,7 +5,7 @@
  */
 /**
  * Created on : 07-nov-2013, 15:02:43
- * @author David Andrés Maznzano Herrera <damanzano>
+ * @author David Andrés Manzano Herrera <damanzano>
  */
 
 /**

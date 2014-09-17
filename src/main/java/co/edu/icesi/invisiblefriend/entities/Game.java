@@ -7,9 +7,7 @@
 package co.edu.icesi.invisiblefriend.entities;
 
 import com.google.appengine.api.datastore.Key;
-import com.google.appengine.repackaged.com.google.common.collect.HashBiMap;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import javax.persistence.Basic;
@@ -17,10 +15,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
- * @author David Andrés Maznzano Herrera <damanzano>
+ * @author David Andrés Manzano Herrera <damanzano>
  */
 @Entity
 public class Game {
@@ -31,17 +31,20 @@ public class Game {
     @Basic
     private String description;
     @Basic
+    @Temporal(TemporalType.DATE)
     private Date creationDate;
     @Basic
-    private Player createdBy;
+    private Key createdBy;
     @Basic
+    @Temporal(TemporalType.DATE)
     private Date startDate;
     @Basic
+    @Temporal(TemporalType.DATE)
     private Date endDate;
     @Basic
-    private ArrayList players;
+    private ArrayList<Key> players;
     @Basic
-    private HashMap friends;
+    private HashMap<Key, Key> friends;
 
     public Key getKey() {
         return key;
@@ -67,11 +70,11 @@ public class Game {
         this.creationDate = creationDate;
     }
 
-    public Player getCreatedBy() {
+    public Key getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(Player createdBy) {
+    public void setCreatedBy(Key createdBy) {
         this.createdBy = createdBy;
     }
 

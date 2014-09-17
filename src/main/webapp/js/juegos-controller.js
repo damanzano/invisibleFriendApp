@@ -5,7 +5,7 @@
 /**
  * Created on : 07-nov-2013, 15:02:12
  * Juegos entity controller
- * @author David Andrés Maznzano Herrera <damanzano>
+ * @author David Andrés Manzano Herrera <damanzano>
  */
 app.controller('juegosController', ['$scope', '$routeParams', 'appFactory', function($scope, $routeParams, appFactory) {
         $scope.status;

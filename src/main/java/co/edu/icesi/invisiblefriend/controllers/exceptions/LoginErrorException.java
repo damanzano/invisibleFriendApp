@@ -8,7 +8,7 @@ package co.edu.icesi.controllers.invisiblefriend.exceptions;
 
 /**
  *
- * @author David Andrés Maznzano Herrera <damanzano>
+ * @author David Andrés Manzano Herrera <damanzano>
  */
 public class LoginErrorException extends Exception{
     public LoginErrorException(String message, Throwable cause) {
