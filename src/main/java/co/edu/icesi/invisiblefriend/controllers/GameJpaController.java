@@ -5,6 +5,7 @@
  */
 package co.edu.icesi.invisiblefriend.controllers;
 
+import co.edu.icesi.controllers.invisiblefriend.exceptions.NonexistentEntityException;
 import co.edu.icesi.controllers.invisiblefriend.exceptions.PreexistingEntityException;
 import co.edu.icesi.invisiblefriend.entities.Game;
 import com.google.appengine.api.datastore.Key;
@@ -69,7 +70,7 @@ public class GameJpaController implements Serializable {
             em.getTransaction().commit();
         } catch (Exception ex) {
             if (findOne(entity.getKey()) != null) {
-                throw new PreexistingEntityException("Game " + entity + " already exists.", ex);
+                throw new PreexistingEntityException("The game " + entity + " already exists.", ex);
             }
             throw ex;
         } finally {
@@ -79,8 +80,26 @@ public class GameJpaController implements Serializable {
         }
     }
 
-    public void edit(Game entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void edit(Game entity) throws NonexistentEntityException, Exception {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            entity = em.merge(entity);
+            em.getTransaction().commit();
+        }catch (Exception ex) {
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                if (findOne(entity.getKey()) == null) {
+                    throw new NonexistentEntityException("The game with key " + entity.getKey() + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     public void destroy(String key) {
