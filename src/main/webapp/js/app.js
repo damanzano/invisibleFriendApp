@@ -8,7 +8,7 @@ var app = angular.module('invisibleFriendApp', ['ngRoute']);
 app.config(['$routeProvider', function($routeProvider) {
         $routeProvider
                 .when('/', {
-                    controller: 'juegosController',
+                    controller: 'loginController',
                     templateUrl: 'views/main.html'
                 })
                 .when('/juegos', {

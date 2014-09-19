@@ -9,7 +9,16 @@
  */
 'use strict';
 app.controller('loginController', ['$scope', '$routeParams', 'appFactory', function($scope, $routeParams, appFactory) {
-        $scope.login =  function(person){
-            appFactory.login(person);
-        };
+        $scope.loginInfo;
+        
+        init();
+        function init() {
+            appFactory.loginPlayer()
+                    .success(function(response){
+                        $scope.loginInfo = response;
+                    })
+                    .error(function(){
+                        console.log("Unable to retrive login information ");
+                    });
+        }
 }]);

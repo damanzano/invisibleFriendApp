@@ -14,100 +14,73 @@
  *  @param {type} $http The inyected angular http object  
  */
 app.factory('appFactory', ['$http', function($http) {
-        var juegosUrlBase = 'webresources/juegos';
-        var particUrlBase = 'webresources/participantes';
-        var personasUrlBase = 'webresources/personas';
-        var amigosdeUrlBase = 'webresources/amigosde';
-        var loginUrlBase = 'webresources/login';
+        var gamesUrlBase = 'rest/games';
+        var playersUrlBase = 'rest/players';
 
-        var juegos = [
+        var games = [
             {numeroId: '1', descripcion: 'Desarrollo cunpleaños', fechaCreacion: '2013-10-01', fechaInicial: '2013-10-01', fechaFinal: '2013-11-06'}
             , {numeroId: '2', descripcion: 'Desarrollo Navidad', fechaCreacion: '2013-11-07', fechaInicial: '2013-11-15', fechaFinal: '2013-12-15'}
             , {numeroId: '3', descripcion: 'Reyes', fechaCreacion: '2011-10-01', fechaInicial: '2014-01-01', fechaFinal: '2014-01-06'}
         ];
         
-        var personas = [];
-        var participantes = [];
-        var amigosDe = [];
+        var players = [];
 
         var factory = {};
         
-        // Juegos services
-        factory.getJuegos = function() {
-            return $http.get(juegosUrlBase);
+        // Game services
+        factory.getGames = function() {
+            return $http.get(gamesUrlBase);
         };
-        factory.countJuegos = function() {
-            return $http.get(juegosUrlBase + '/count');
+        factory.countGames = function() {
+            return $http.get(gamesUrlBase + '/count');
         };
-        factory.getJuego = function(juegoId) {
-            return $http.get(juegosUrlBase + '/' + juegoId);
+        factory.getGame= function(gameId) {
+            return $http.get(gamesUrlBase + '/' + gameId);
         };
-        factory.createJuego = function(juego) {
-            /* Call the juegos/create service*/
-            return $http.post(juegosUrlBase, juego);
+        factory.createGame = function(game) {
+            /* Call the games/create service*/
+            return $http.post(gamesUrlBase, game);
         };
-        factory.updateJuego = function(juego) {
-            /* Call the juegos/edit service*/
-            return $http.put(juegosUrlBase, juego);
+        factory.updateGame = function(game) {
+            /* Call the games/edit service*/
+            return $http.put(gamesUrlBase, game);
         };
-        factory.deleteJuego = function(juegoId) {
-            /* Call the juego/delete service*/
-            return $http.delete(juegosUrlBase + '/' + juegoId);
+        factory.deleteGame = function(gameId) {
+            /* Call the game/delete service*/
+            return $http.delete(gamesUrlBase + '/' + gameId);
         };
-        factory.getStaticJuegos = function() {
-            return juegos;
-        };
-        
-        // Participantes services
-        factory.getParticipantes = function() {
-            return $http.get(particUrlBase);
-        };
-        factory.countParticipantes = function() {
-            return $http.get(particUrlBase + '/count');
-        };
-        factory.getParticipante = function(id) {
-            return $http.get(particUrlBase + '/' + id);
-        };
-        factory.createParticipante = function(participante) {
-            /* Call the juegos/create service*/
-            return $http.post(particUrlBase, participante);
-        };
-        factory.updateParticipante = function(participante) {
-            /* Call the juegos/edit service*/
-            return $http.put(particUrlBase, participante);
-        };
-        factory.deleteParticipante = function(id) {
-            /* Call the juego/delete service*/
-            return $http.delete(particUrlBase + '/' + id);
+        factory.getStaticGames = function() {
+            return games;
         };
         
-        // Personas services
-        factory.getPersonas = function() {
-            return $http.get(personasUrlBase);
+        
+        // Players services
+        factory.getPlayers = function() {
+            return $http.get(playersUrlBase);
         };
-        factory.countPersonas = function() {
-            return $http.get(personasUrlBase + '/count');
+        factory.countPlayers = function() {
+            return $http.get(playersUrlBase + '/count');
         };
-        factory.getPersona = function(id) {
-            return $http.get(personasUrlBase + '/' + id);
+        factory.getPlayer = function(id) {
+            return $http.get(playersUrlBase + '/' + id);
         };
-        factory.createPersona = function(persona) {
-            /* Call the juegos/create service*/
-            return $http.post(personasUrlBase, persona);
+        factory.createPlayer = function(persona) {
+            /* Call the games/create service*/
+            return $http.post(playersUrlBase, persona);
         };
-        factory.updatePersona = function(persona) {
-            /* Call the juegos/edit service*/
-            return $http.put(personasUrlBase, persona);
+        factory.updatePlayer = function(persona) {
+            /* Call the games/edit service*/
+            return $http.put(playersUrlBase, persona);
         };
-        factory.deletePersona = function(id) {
-            /* Call the juego/delete service*/
-            return $http.delete(personasUrlBase + '/' + id);
+        factory.deletePlayer = function(id) {
+            /* Call the game/delete service*/
+            return $http.delete(playersUrlBase + '/' + id);
         };
-        factory.uploadPersonaFoto = function(photo) {
-            /* Call the juegos/create service*/
+        factory.uploadPlayerFoto = function(photo) {
+            /* Call the games/create service*/
             return $http({
                 method: 'POST'
-                , url: personasUrlBase +'/upload'
+                , url: playersUrlBase +'/upload'
                 , data: { files:photo}
                 , headers: {'Content-Type': undefined}
                 , transformRequest: function(data){
@@ -117,16 +90,19 @@ app.factory('appFactory', ['$http', function($http) {
                 }
             });
         };
-        factory.login=function (person){
-          var $promise = $http.post(loginUrlBase, person);
-          $promise.then(function(mdg){
-             if(msg.data=="succes"){
-                 console.log("success login");
-             }else{
-                 console.log("error login");
-             }
-          });
+        factory.loginPlayer = function(){
+          return $http.get(playersUrlBase + '/login');  
         };
+//        factory.login=function (person){
+//          var $promise = $http.post(loginUrlBase, person);
+//          $promise.then(function(mdg){
+//             if(msg.data=="succes"){
+//                 console.log("success login");
+//             }else{
+//                 console.log("error login");
+//             }
+//          });
+//        };
         
         
         return factory;

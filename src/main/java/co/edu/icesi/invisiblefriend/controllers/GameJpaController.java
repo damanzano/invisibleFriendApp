@@ -15,19 +15,20 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
  * @author David Andrés Manzano Herrera <damanzano>
  */
 public class GameJpaController implements Serializable {
-    
+
     private EntityManagerFactory emf = null;
-    
+
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-    
+
     public GameJpaController(EntityManagerFactory entityManagerFactory) {
         this.emf = entityManagerFactory;
     }
@@ -35,11 +36,11 @@ public class GameJpaController implements Serializable {
     public List<Game> find() {
         return find(true, -1, -1);
     }
-    
+
     public List<Game> find(int maxResults, int firstResult) {
         return find(false, maxResults, firstResult);
     }
-    
+
     private List<Game> find(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
@@ -61,7 +62,7 @@ public class GameJpaController implements Serializable {
     }
 
     public void create(Game entity) throws PreexistingEntityException, Exception {
-        
+
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -87,7 +88,7 @@ public class GameJpaController implements Serializable {
             em.getTransaction().begin();
             entity = em.merge(entity);
             em.getTransaction().commit();
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 if (findOne(entity.getKey()) == null) {
@@ -107,11 +108,25 @@ public class GameJpaController implements Serializable {
     }
 
     public Object getCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<Game> rt = cq.from(Game.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
     }
 
-    private Object findOne(Key key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private Game findOne(Key key) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(Game.class, key);
+        } finally {
+            em.close();
+        }
     }
 
 }

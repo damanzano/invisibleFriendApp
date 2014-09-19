@@ -7,6 +7,7 @@ package co.edu.icesi.invisiblefriend.restservices;
 
 import co.edu.icesi.invisiblefriend.controllers.PlayerJpaController;
 import co.edu.icesi.invisiblefriend.entities.Player;
+import co.edu.icesi.invisiblefriend.login.LoginInfo;
 import java.net.URI;
 import java.util.List;
 import javax.naming.NamingException;
@@ -63,6 +64,13 @@ public class PlayerRESTFacade {
         } catch (Exception ex) {
             return Response.notModified(ex.getMessage()).build();
         }
+    }
+    
+    @GET
+    @Path("/login")
+    @Produces({"application/json"})
+    public LoginInfo Login() {
+            return getJpaController().verifyCredentials();
     }
 
     @PUT

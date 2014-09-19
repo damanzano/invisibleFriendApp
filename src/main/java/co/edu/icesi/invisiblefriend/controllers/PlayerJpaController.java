@@ -7,12 +7,18 @@ package co.edu.icesi.invisiblefriend.controllers;
 
 import co.edu.icesi.controllers.invisiblefriend.exceptions.PreexistingEntityException;
 import co.edu.icesi.invisiblefriend.entities.Player;
+import co.edu.icesi.invisiblefriend.login.LoginInfo;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -106,7 +112,49 @@ public class PlayerJpaController implements Serializable {
         }
     }
 
-    private Object findOne(Key key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private Player findOne(Key key) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(Player.class, key);
+        } finally {
+            em.close();
+        }
+    }
+    
+    private Player findByGoogleUser(User googleUser){
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Player> q = em.createNamedQuery("Player.findByGoogleUser", Player.class);
+            q.setParameter("googleUser", googleUser);
+            Player player = q.getSingleResult();
+            return player;
+        } catch (NoResultException ex) {
+            throw ex;
+        } finally {
+            em.close();
+        }
+    }
+
+    public LoginInfo verifyCredentials() {
+        UserService userService = UserServiceFactory.getUserService();
+        User currentUser = userService.getCurrentUser();
+
+        // verify if the user is authenticated
+        if (currentUser != null) {
+            // Look for a player that match with the current user
+            Player player=null;
+            try{
+                player= findByGoogleUser(currentUser);
+                return new LoginInfo(player, userService.createLoginURL("/"), userService.createLogoutURL("/"));
+            }catch(NoResultException ex){
+                // The user is authenticated but not registrated
+                player = new Player();
+                player.setGoogleUser(currentUser);
+                return new LoginInfo(player,userService.createLoginURL("/"), userService.createLogoutURL("/"), true, "");
+            }
+        }
+        
+        // The user is not authenticated, return a message for registration in Google Accounts
+        return new LoginInfo(true, "/");
     }
 }

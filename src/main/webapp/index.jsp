@@ -33,13 +33,6 @@
         <noscript><link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css"></noscript>
     </head>
     <body>
-        <%
-            UserService userService = UserServiceFactory.getUserService();
-            User user = userService.getCurrentUser();
-            if (user != null) {
-                pageContext.setAttribute("user", user);
-            }
-        %>
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -58,36 +51,29 @@
                         <li><a href="#/personas">Personas</a></li>
                     </ul>
                     <!-- Login button link -->
-                    <%
-                        if (user != null) {
-                    %>
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right" ng-show="loginInfo">
                         <li class="dropdown">
-                            <a href="#" class="btn btn-default navbar-btn dropdown-toggle" type="button" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-user"></span> Hola ${fn:escapeXml(user.nickname)}!
+                            <a href="#" class="btn btn-default navbar-btn dropdown-toggle" type="button" data-toggle="dropdown" ng-show="loginInfo.currentPlayer.googleUser">
+                                <span class="glyphicon glyphicon-user"></span> Hola {{loginInfo.currenPlayer.googleUser.nickname}}!
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="<%= userService.createLogoutURL(request.getRequestURI())%>">Log out</a></li>
+                                <li><a href="{{loginInfo.logoutUrl}}">Log out</a></li>
                                 <li><a href="#">Option 2</a></li>
                                 <li><a href="#">Option 3</a></li>
                             </ul>
                         </li>
                     </ul>
-                    <%
-                    } else {
-                    %>
-                    <div class="nav navbar navbar-right">
-                        <a class="btn btn-primary navbar-btn" href="<%=userService.createLoginURL(request.getRequestURI())%>">
+              
+                    <div class="nav navbar navbar-right" ng-hide="loginInfo.currentPlayer">
+                        <a class="btn btn-primary navbar-btn" href="{{loginInfo.loginUrl}}">
                             <span class="glyphicon glyphicon-log-in"></span> Login
                         </a>
-                        <a class="btn btn-info navbar-btn" href="<%=userService.createLoginURL(request.getRequestURI())%>">
+                        
+                        <a class="btn btn-info navbar-btn" href="{{loginInfo.registerUrl}}">
                             <span class="glyphicon glyphicon-log-in"></span> Regístrate
                         </a>
                     </div>
-                    <%
-                        }
-                    %>
                 </div><!--/.navbar-collapse -->
             </div>
         </div>
