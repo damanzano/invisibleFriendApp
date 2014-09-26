@@ -155,6 +155,6 @@ public class PlayerJpaController implements Serializable {
         }
         
         // The user is not authenticated, return a message for registration in Google Accounts
-        return new LoginInfo(true, "/");
+        return new LoginInfo(userService.createLoginURL("/"),true, "/players/register");
     }
 }

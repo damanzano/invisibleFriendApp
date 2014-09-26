@@ -5,10 +5,10 @@
  */
 var app = angular.module('invisibleFriendApp', ['ngRoute']);
 
-app.config(['$routeProvider', function($routeProvider) {
+app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
                 .when('/', {
-                    controller: 'loginController',
+                    controller: 'mainController',
                     templateUrl: 'views/main.html'
                 })
                 .when('/juegos', {
@@ -35,6 +35,10 @@ app.config(['$routeProvider', function($routeProvider) {
                     controller: 'personasController',
                     templateUrl: 'views/personas/persona-edit.html'
                 })
+                .when('/profile', {
+                    controller:'playersController',
+                    templateUrl:'view/players/profile.html'
+                })
 //                .when('/login', {
 //                    controller: 'loginController',
 //                    templateUrl: 'views/authentication/google_login.html'
@@ -43,16 +47,16 @@ app.config(['$routeProvider', function($routeProvider) {
     }]);
 
 /**
- * This custom directive fix a bug with Googlr Chrome input type="date" tags
+ * This custom directive fix a bug with Google Chrome input type="date" tags
  **/
-app.directive('input', function() {
+app.directive('input', function () {
     return {
         require: '?ngModel',
         restrict: 'E',
-        link: function(scope, element, attrs, ngModel) {
+        link: function (scope, element, attrs, ngModel) {
             if (attrs.type = "date" && ngModel) {
-                element.bind('change', function() {
-                    scope.$apply(function() {
+                element.bind('change', function () {
+                    scope.$apply(function () {
                         ngModel.$setViewValue(element.val());
                     });
                 });

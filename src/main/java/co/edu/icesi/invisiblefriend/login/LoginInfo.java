@@ -34,6 +34,9 @@ public class LoginInfo {
         this(currentPlayer, loginUrl, logoutUrl, false,"");
     }
     
+    public LoginInfo(String loginUrl, boolean registrationNeeded, String registrationUrl){
+        this(null,loginUrl, null, registrationNeeded, registrationUrl);
+    }
     public LoginInfo(boolean registrationNeeded, String registrationUrl){
         this(null,null, null, registrationNeeded, registrationUrl);
     }

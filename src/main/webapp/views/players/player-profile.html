@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="player view">
+        <div class="toolbar">
+            <a class="btn btn-primary pull-right" href="#/player/edit/{{currentPlayer.numeroId}}"><span class="glyphicon glyphicon-edit"></span> Editar</a>
+        </div>
+
+        <h2>({{ currentPlayer.numeroId}}) {{ currentPlayer.nombre}} {{currentPlayer.apellidos}}</h2>
+
+        <div class="persona-details row">
+            <img class="persona-img img-circle img-thumbnail pull-left" src="photos/{{currentPlayer.foto? currentPlayer.foto:'no-image.png'}}" alt="{{ currentPlayer.nombre}} {{currentPlayer.apellidos}}"/>
+            <div class="col-md-6">
+                <h3>Detalles</h3>
+                <ul>
+                    <li>Correo electr&oacute;nico {{ currentPlayer.correoElectronico }}</li>
+                    <li>Inicio endulce {{ currentPlayer.ubicacion }}</li>
+                    <li>G&eacute;nero {{ (currentPlayer.sexo=='M') ? 'Masculino':'Femenino' }}</li>
+                </ul>
+                <!-- Comming soon 
+                <h3>Juegos en los que participa Actualmente</h3>
+                -->
+            </div>
+        </div>
+    </div>
+</div>

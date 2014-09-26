@@ -32,7 +32,7 @@
         <noscript><link rel="stylesheet" href="css/jquery.fileupload-noscript.css"></noscript>
         <noscript><link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css"></noscript>
     </head>
-    <body>
+    <body ng-controller="loginController">
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -46,9 +46,10 @@
                 </div>
                 <!-- navbar collapsible content -->
                 <div class="navbar-collapse collapse">
+                    <!-- TODO: this should only be shown to administrators -->
                     <ul class="nav navbar-nav">
-                        <li><a href="#/juegos">Juegos</a></li>
-                        <li><a href="#/personas">Personas</a></li>
+                        <li><a href="#/games">Juegos</a></li>
+                        <li><a href="#/players">Personas</a></li>
                     </ul>
                     <!-- Login button link -->
                     <ul class="nav navbar-nav navbar-right" ng-show="loginInfo">
@@ -109,8 +110,9 @@
         <!-- App libs -->
         <script src="js/app.js"></script>
         <script src="js/factories.js"></script>
-        <script src="js/juegos-controller.js"></script>
-        <script src="js/personas-controller.js"></script>
+        <script src="js/main-controller.js"></script>
         <script src="js/login-controller.js"></script>
+        <script src="js/games-controller.js"></script>
+        <script src="js/players-controller.js"></script>
     </body>
 </html>
