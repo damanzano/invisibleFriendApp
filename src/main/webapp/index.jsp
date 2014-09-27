@@ -52,15 +52,15 @@
                         <li><a href="#/players">Personas</a></li>
                     </ul>
                     <!-- Login button link -->
-                    <ul class="nav navbar-nav navbar-right" ng-show="loginInfo">
+                    <ul class="nav navbar-nav navbar-right" ng-show="loginInfo.currentPlayer">
                         <li class="dropdown">
                             <a href="#" class="btn btn-default navbar-btn dropdown-toggle" type="button" data-toggle="dropdown" ng-show="loginInfo.currentPlayer.googleUser">
-                                <span class="glyphicon glyphicon-user"></span> Hola {{loginInfo.currenPlayer.googleUser.nickname}}!
+                                <span class="glyphicon glyphicon-user"></span> Hola {{loginInfo.currentPlayer.googleUser.nickname}}!
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{loginInfo.logoutUrl}}">Log out</a></li>
-                                <li><a href="#">Option 2</a></li>
+                                <li><a href="#/profile">Profile</a></li>
                                 <li><a href="#">Option 3</a></li>
                             </ul>
                         </li>
@@ -112,6 +112,7 @@
         <script src="js/factories.js"></script>
         <script src="js/main-controller.js"></script>
         <script src="js/login-controller.js"></script>
+        <script src="js/profile-controller.js"></script>
         <script src="js/games-controller.js"></script>
         <script src="js/players-controller.js"></script>
     </body>

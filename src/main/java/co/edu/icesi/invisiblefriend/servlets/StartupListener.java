@@ -36,6 +36,8 @@ public class StartupListener implements ServletContextListener{
         Player player = new Player();
         User googleUser = new User("damh24@gmail.com", "gmail.com");
         player.setGoogleUser(googleUser);
+        player.setName("David Andrés");
+        player.setLastname("Manzano Herrera");
         player.setGender("M");
         player.setLocation("Oficina de Desarrollo de Sistemas");
 

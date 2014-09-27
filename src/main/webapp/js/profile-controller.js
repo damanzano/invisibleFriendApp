@@ -7,8 +7,11 @@
  * Created on : 26-sep-2014, 17:19:06
  * @author David Andrés Manzano Herrera <damanzano>
  */
-app.controller('playersController', ['$scope', '$routeParams', '$location', 'appFactory', function($scope, $routeParams, $location, appFactory) {
+app.controller('profileController', ['$scope', '$routeParams', '$location', 'appFactory', function($scope, $routeParams, $location, appFactory) {
         $scope.currentPlayer;
+        $scope.genders = [{id: 'M', desc: 'Masculino'}, {id: 'F', desc: 'Femenino'}];
+        $scope.selectedGender = $scope.genders[0];
+        $scope.imagePreview;
         
 //        init();
 //        function init() {
@@ -20,4 +23,59 @@ app.controller('playersController', ['$scope', '$routeParams', '$location', 'app
            $scope.currentPlayer= newValue.currentPlayer; 
         });
         
+        $scope.validatePlayer = function(player) {
+            player.gender = $scope.selectedGender.id;
+            //first upload the new image if it change
+            if ($scope.imagePreview != null) {
+                appFactory.uploadPlayerPhoto($scope.imagePreview)
+                        .success(function(data, status, headers, config) {
+                            //if the image was uploaded create the new Player using the image's filename
+                            var photoDirParts = data.url.split('/');
+                            var photoName = photoDirParts[3];
+
+                            console.log(photoDirParts[3]);
+
+                            player.foto = photoName;
+                            $scope.updatePlayer(player);
+
+                        })
+                        .error(function(data, status, headers, confi) {
+                            console.log("There was a problem uploading your img, plese try again later");
+                        });
+            } else {
+                $scope.updatePlayer(player);
+            }
+
+        };
+        
+        $scope.updatePlayer = function(player) {
+            //call the update person service
+            appFactory.updatePlayer(player)
+                    .success(function(data, status, headers, config) {
+                        $scope.status = 'Updated juego! Refreshing the juegos list.';
+
+                        console.log(player);
+                        
+                    })
+                    .error(function(data, status, headers, config) {
+                        //TODO Do someting when errors
+                    });
+
+        };
+        
+        $scope.fileNameChaged = function(input) {
+            if (input && input.files[0]) {
+                $scope.imagePreview = input.files[0];
+
+                var fileReader = new FileReader();
+                fileReader.onload = function(e) {
+                    jQuery('#img-preview').attr('src', e.target.result);
+                }
+
+                fileReader.readAsDataURL(input.files[0]);
+
+            } else {
+                // do some kind of visual feedback
+            }
+        };
 }]);

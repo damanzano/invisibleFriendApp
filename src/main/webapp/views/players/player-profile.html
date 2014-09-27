@@ -1,19 +1,19 @@
 <div class="container">
     <div class="player view">
         <div class="toolbar">
-            <a class="btn btn-primary pull-right" href="#/player/edit/{{currentPlayer.numeroId}}"><span class="glyphicon glyphicon-edit"></span> Editar</a>
+            <a class="btn btn-primary pull-right" href="#/profile/edit/{{currentPlayer.key.id}}"><span class="glyphicon glyphicon-edit"></span> Edit</a>
         </div>
 
-        <h2>({{ currentPlayer.numeroId}}) {{ currentPlayer.nombre}} {{currentPlayer.apellidos}}</h2>
+        <h2>{{ currentPlayer.name}} {{currentPlayer.lastname}}</h2>
 
         <div class="persona-details row">
-            <img class="persona-img img-circle img-thumbnail pull-left" src="photos/{{currentPlayer.foto? currentPlayer.foto:'no-image.png'}}" alt="{{ currentPlayer.nombre}} {{currentPlayer.apellidos}}"/>
+            <img class="persona-img img-circle img-thumbnail pull-left" src="photos/{{currentPlayer.photo? currentPlayer.foto:'no-image.png'}}" alt="{{ currentPlayer.name}} {{currentPlayer.lastname}}"/>
             <div class="col-md-6">
                 <h3>Detalles</h3>
                 <ul>
-                    <li>Correo electr&oacute;nico {{ currentPlayer.correoElectronico }}</li>
-                    <li>Inicio endulce {{ currentPlayer.ubicacion }}</li>
-                    <li>G&eacute;nero {{ (currentPlayer.sexo=='M') ? 'Masculino':'Femenino' }}</li>
+                    <li>Email {{ currentPlayer.googleUser.email }}</li>
+                    <li>Inicio endulce {{ currentPlayer.location }}</li>
+                    <li>G&eacute;nero {{ (currentPlayer.gender=='M') ? 'Male':'Female' }}</li>
                 </ul>
                 <!-- Comming soon 
                 <h3>Juegos en los que participa Actualmente</h3>

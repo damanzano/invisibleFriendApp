@@ -31,6 +31,10 @@ public class Player {
     @Basic
     private User googleUser;
     @Basic
+    private String name;
+    @Basic
+    private String  lastname;
+    @Basic
     private String gender;
     @Basic
     private String location;
@@ -51,6 +55,22 @@ public class Player {
         this.googleUser = googleUser;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+    
     public String getGender() {
         return gender;
     }

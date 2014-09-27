@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="player view">
+        <div class="toolbar">
+            <a class="btn btn-danger pull-right" href="#/profile"><span class="glyphicon glyphicon-edit"></span> Close</a>
+            <button class="btn btn-warning pull-right" ng-click="validatePlayer(currentPlayer)"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
+        </div>
+
+        <h2>Edit player {{ currentPlayer.name}} {{currentPlayer.lastname}}</h2>
+
+        <div class="player-details">
+            <section class="module-create">
+                <!-- Creation Form -->
+                <form role="form" enctype="multipart/form-data" method="POST" >
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" ng-model="currentPlayer.name" class="form-control" id="name" placeholder="Ingresa el name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname">Lastname</label>
+                        <input type="text" ng-model="currentPlayer.lastname" class="form-control" id="lastname" placeholder="Ingresa los lastname" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="ubicacion">Location</label>
+                        <input type="text" ng-model="currentPlayer.location" class="form-control" id="ubicacion" placeholder="Ingresa al ubicación" required />
+                    </div>
+                    <div class="form-group" >
+                        <label for="sexo">Gender</label>
+                        <select class="form-control" ng-model="selectedGender" ng-options="gender.desc for gender in genders" id="gender" name="gender" required></select>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="ubicacion">Photo</label>
+                        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                        <div class="row fileupload-buttonbar">
+
+                            <div class="">
+                                <img id="img-preview" class="player-img-preview img-circle img-thumbnail" src="photos/{{currentPlayer.photo}}" alt="Your image"/>
+                                <!-- The fileinput-button span is used to style the file input field as button -->
+                                <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <span>Select a file</span>
+                                    <input type="file" name="files" ng-disabled="disabled" id="files" onchange="angular.element(this).scope().fileNameChaged(this)" required>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>

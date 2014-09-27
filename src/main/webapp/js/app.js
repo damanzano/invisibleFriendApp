@@ -36,8 +36,12 @@ app.config(['$routeProvider', function ($routeProvider) {
                     templateUrl: 'views/personas/persona-edit.html'
                 })
                 .when('/profile', {
-                    controller:'playersController',
-                    templateUrl:'view/players/profile.html'
+                    controller: 'profileController',
+                    templateUrl: 'views/players/player-profile.html'
+                })
+                .when('/profile/edit/:playerId', {
+                    controller: 'profileController',
+                    templateUrl: 'views/players/player-edit.html'
                 })
 //                .when('/login', {
 //                    controller: 'loginController',

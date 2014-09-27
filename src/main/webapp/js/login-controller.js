@@ -18,9 +18,9 @@ app.controller('loginController', ['$scope', '$location', 'appFactory', function
             appFactory.loginPlayer()
                     .success(function(response){
                         $scope.loginInfo = response;
-                        if($scope.loginInfo.currentPlayer!=null){
-                            $location.url('/player/profile');
-                        }
+//                        if($scope.loginInfo.currentPlayer!=null){
+//                            $location.path('/profile');
+//                        }
                     })
                     .error(function(){
                         console.log("Unable to retrive login information ");
