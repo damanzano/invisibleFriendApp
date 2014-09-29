@@ -43,6 +43,10 @@ app.config(['$routeProvider', function ($routeProvider) {
                     controller: 'profileController',
                     templateUrl: 'views/players/player-edit.html'
                 })
+                .when('/register', {
+                    controller: 'profileController',
+                    templateUrl: 'views/players/player-register.html'
+                })
 //                .when('/login', {
 //                    controller: 'loginController',
 //                    templateUrl: 'views/authentication/google_login.html'

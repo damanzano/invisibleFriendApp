@@ -35,7 +35,9 @@
         <appengine.app.version>1</appengine.app.version>
         <appengine.target.version>1.9.10</appengine.target.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <datanucleus.jpa.version>3.1.3</datanucleus.jpa.version>  
+        <datanucleus.jpa.version>3.1.3</datanucleus.jpa.version>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -127,6 +129,24 @@
             <artifactId>jersey-json</artifactId>
             <version>1.8</version>
         </dependency>
+        <dependency>
+            <groupId>com.sun.jersey.contribs</groupId>
+            <artifactId>jersey-multipart</artifactId>
+            <version>1.8</version>
+        </dependency>
+        
+        <!-- Google Cloud Storage dependencies -->
+        <dependency>
+            <groupId>com.google.appengine.tools</groupId>
+            <artifactId>appengine-gcs-client</artifactId>
+            <version>0.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+            
         
         <!-- Test Dependencies -->
         <dependency>

@@ -150,7 +150,7 @@ public class PlayerJpaController implements Serializable {
                 // The user is authenticated but not registrated
                 player = new Player();
                 player.setGoogleUser(currentUser);
-                return new LoginInfo(player,userService.createLoginURL("/"), userService.createLogoutURL("/"), true, "");
+                return new LoginInfo(player,userService.createLoginURL("/"), userService.createLogoutURL("/"), true, "/register");
             }
         }
         

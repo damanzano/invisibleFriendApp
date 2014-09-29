@@ -3,3 +3,4 @@ nb-configuration.xml
 /build/
 /dist/
 /target/
+/src/main/webapp/client_secrets.json

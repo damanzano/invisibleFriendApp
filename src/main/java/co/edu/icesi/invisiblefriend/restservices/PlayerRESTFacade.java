@@ -5,11 +5,17 @@
  */
 package co.edu.icesi.invisiblefriend.restservices;
 
+import co.edu.icesi.invisiblefriend.controllers.CloudStoragePlayerPhotoController;
 import co.edu.icesi.invisiblefriend.controllers.PlayerJpaController;
 import co.edu.icesi.invisiblefriend.entities.Player;
 import co.edu.icesi.invisiblefriend.login.LoginInfo;
+import com.sun.jersey.core.header.FormDataContentDisposition;
+import com.sun.jersey.multipart.FormDataParam;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -21,7 +27,10 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 /**
  *
@@ -100,6 +109,28 @@ public class PlayerRESTFacade {
     @Produces({"application/json"})
     public String count() {
         return String.valueOf(getJpaController().getCount());
+    }
+    
+    @POST
+    @Path("/upload")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces({"application/json"})
+    public JSONObject uploadFoto(
+            @FormDataParam("files") InputStream uploadedInputStream,
+            @FormDataParam("files") FormDataContentDisposition fileDetail) {
+
+        //return Response.status(200).entity(output).build();
+        
+        JSONObject jsonObject = new JSONObject();
+//        try {
+//            jsonObject.put("name", fileDetail.getFileName());
+//            jsonObject.put("size", fileDetail.getSize());
+//            
+//        } catch (JSONException ex) {
+//            Logger.getLogger(PlayerRESTFacade.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        return jsonObject;
+
     }
 
 }

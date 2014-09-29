@@ -76,7 +76,7 @@ app.factory('appFactory', ['$http', function($http) {
             /* Call the game/delete service*/
             return $http.delete(playersUrlBase + '/' + id);
         };
-        factory.uploadPlayerFoto = function(photo) {
+        factory.uploadPlayerPhoto = function(photo) {
             /* Call the games/create service*/
             return $http({
                 method: 'POST'
