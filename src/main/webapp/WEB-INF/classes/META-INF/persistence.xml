@@ -14,8 +14,8 @@
         </properties>
         
     </persistence-unit>
+    <!--
     <persistence-unit name="invisibleFriendAppPU2">
-        <!--
         <class>co.edu.icesi.invisiblefriend.entities.Participantes</class>
         <class>co.edu.icesi.invisiblefriend.entities.Personas</class>
         <class>co.edu.icesi.invisiblefriend.entities.EsAmigoDe</class>
@@ -27,6 +27,6 @@
             <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
             <property name="javax.persistence.jdbc.user" value="jlozano"/>
         </properties>
-        -->
     </persistence-unit>
+    -->
 </persistence>

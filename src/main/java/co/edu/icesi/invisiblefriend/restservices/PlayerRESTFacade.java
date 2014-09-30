@@ -127,12 +127,12 @@ public class PlayerRESTFacade {
         try {
 
             //return Response.status(200).entity(output).build();
-            getCloudController().saveFile("ifa " + fileDetail.getFileName(), uploadedInputStream, fileDetail);
+            String imageUrl = getCloudController().saveFile("ifa " + fileDetail.getFileName(), uploadedInputStream, fileDetail);
 
             try {
-                jsonObject.put("name", "Hello");
-                jsonObject.put("size", "1");
-
+                jsonObject.put("name", fileDetail.getFileName());
+                jsonObject.put("size", fileDetail.getSize());
+                jsonObject.put("url", imageUrl);
             } catch (JSONException ex) {
                 Logger.getLogger(PlayerRESTFacade.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -7,8 +7,10 @@ package co.edu.icesi.invisiblefriend.cloudstorage;
 
 import com.google.appengine.api.appidentity.AppIdentityService;
 import com.google.appengine.api.appidentity.AppIdentityServiceFactory;
+import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
 import com.google.appengine.tools.cloudstorage.GcsFileOptions;
 import com.google.appengine.tools.cloudstorage.GcsFilename;
 import com.google.appengine.tools.cloudstorage.GcsInputChannel;
@@ -59,7 +61,7 @@ public class CloudStoragePlayerPhotoController {
      */
     private static final int BUFFER_SIZE = 2 * 1024 * 1024;
 
-    public void saveFile(String imageTitle, InputStream uploadedInputStream, FormDataContentDisposition fileDetail) throws IOException, ClassNotFoundException {
+    public String saveFile(String imageTitle, InputStream uploadedInputStream, FormDataContentDisposition fileDetail) throws IOException, ClassNotFoundException {
 
         /**
          * Write and read back a object
@@ -68,7 +70,12 @@ public class CloudStoragePlayerPhotoController {
 
         writeImageToFile(filename, uploadedInputStream);
 
-        System.out.println("Wrote " + fileDetail.getFileName() + " read: " + readObjectFromFile(filename));
+        System.out.println("Wrote " + fileDetail.getFileName());
+        //System.out.println("read: " + readObjectFromFile(filename));
+
+        //Image storedImage =  ImagesServiceFactory.makeImage(readFromFile(filename));
+        return imagesService.getServingUrl(ServingUrlOptions.Builder.withGoogleStorageFileName(
+                "/gs/" + filename.getBucketName() + "/" + filename.getObjectName()));
 
     }
 
