@@ -38,6 +38,8 @@ public class Player {
     private String gender;
     @Basic
     private String location;
+    @Basic
+    private String photo;
 
     public Key getKey() {
         return key;
@@ -85,5 +87,13 @@ public class Player {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

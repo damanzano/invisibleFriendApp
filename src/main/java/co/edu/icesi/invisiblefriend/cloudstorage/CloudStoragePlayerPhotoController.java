@@ -61,7 +61,15 @@ public class CloudStoragePlayerPhotoController {
      */
     private static final int BUFFER_SIZE = 2 * 1024 * 1024;
 
-    public String saveFile(String imageTitle, InputStream uploadedInputStream, FormDataContentDisposition fileDetail) throws IOException, ClassNotFoundException {
+    /**
+     * Store files received throught webservices
+     * @param uploadedInputStream
+     * @param fileDetail 
+     * @return The url of the served file 
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public String saveFile(InputStream uploadedInputStream, FormDataContentDisposition fileDetail) throws IOException, ClassNotFoundException {
 
         /**
          * Write and read back a object
@@ -77,6 +85,31 @@ public class CloudStoragePlayerPhotoController {
         return imagesService.getServingUrl(ServingUrlOptions.Builder.withGoogleStorageFileName(
                 "/gs/" + filename.getBucketName() + "/" + filename.getObjectName()));
 
+    }
+    
+    /**
+     * Store files received from server 
+     * @param uploadedInputStream
+     * @param name
+     * @return The url of the served file
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
+     */
+    public String saveFile(InputStream uploadedInputStream, String name) throws IOException, ClassNotFoundException {
+
+        /**
+         * Write and read back a object
+         */
+        GcsFilename filename = new GcsFilename(appIdentityService.getDefaultGcsBucketName(), name);
+
+        writeImageToFile(filename, uploadedInputStream);
+
+        System.out.println("Wrote " + name);
+        //System.out.println("read: " + readObjectFromFile(filename));
+
+        //Image storedImage =  ImagesServiceFactory.makeImage(readFromFile(filename));
+        return imagesService.getServingUrl(ServingUrlOptions.Builder.withGoogleStorageFileName(
+                "/gs/" + filename.getBucketName() + "/" + filename.getObjectName()));
     }
 
     /**

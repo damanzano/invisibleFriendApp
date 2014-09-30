@@ -54,7 +54,7 @@ app.controller('profileController', ['$scope', '$routeParams', '$location', 'app
                             name: $scope.newPlayer.name
                             , lastname: $scope.newPlayer.lastname
                             , googleUser: $scope.currentPlayer.googleUser
-                            , ubicacion: $scope.newPlayer.location
+                            , location: $scope.newPlayer.location
                             , gender: $scope.newPlayer.gender.id
                             , photo: data.url
                         };

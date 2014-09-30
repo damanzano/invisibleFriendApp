@@ -7,15 +7,19 @@ package co.edu.icesi.invisiblefriend.servlets;
 
 import co.edu.icesi.invisiblefriend.controllers.GameJpaController;
 import co.edu.icesi.invisiblefriend.controllers.PlayerJpaController;
+import co.edu.icesi.invisiblefriend.cloudstorage.CloudStoragePlayerPhotoController;
 import co.edu.icesi.invisiblefriend.entities.Game;
 import co.edu.icesi.invisiblefriend.entities.Player;
 import com.google.appengine.api.users.User;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -23,8 +27,9 @@ import javax.servlet.ServletContextListener;
  *
  * @author David Andrés Manzano Herrera <damanzano>
  */
-public class StartupListener implements ServletContextListener{
+public class StartupListener implements ServletContextListener {
 
+    @Override
     public void contextInitialized(ServletContextEvent sce) {
         // Create data to populate de database;
 
@@ -34,21 +39,23 @@ public class StartupListener implements ServletContextListener{
 
         // Create player
         Player player = new Player();
+        String playerPhoto = storePlayerProfilePhoto(sce.getServletContext(), "david-manzano.png");
         User googleUser = new User("damh24@gmail.com", "gmail.com");
         player.setGoogleUser(googleUser);
         player.setName("David Andrés");
         player.setLastname("Manzano Herrera");
         player.setGender("M");
         player.setLocation("Oficina de Desarrollo de Sistemas");
+        player.setPhoto(playerPhoto);
 
         try {
             // Persists player
             playerContrl.create(player);
-            
+
             // Verify if the object was created
-            String playerCount= playerContrl.getCount().toString();
+            String playerCount = playerContrl.getCount().toString();
             Logger.getLogger(StartupListener.class.getName()).log(Level.INFO, "Player count: {0}", playerCount);
-            
+
             //
         } catch (Exception ex) {
             Logger.getLogger(StartupListener.class.getName()).log(Level.SEVERE, null, ex);
@@ -64,21 +71,22 @@ public class StartupListener implements ServletContextListener{
         try {
             // Persists game
             gameContrl.create(game);
-            
+
             // Verify if the object was created
-            String gameCount= gameContrl.getCount().toString();
+            String gameCount = gameContrl.getCount().toString();
             Logger.getLogger(StartupListener.class.getName()).log(Level.INFO, "Game count: {0}", gameCount);
-            
+
             //
         } catch (Exception ex) {
             Logger.getLogger(StartupListener.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    @Override
     public void contextDestroyed(ServletContextEvent sce) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     private EntityManagerFactory getEntityManagerFactory() throws NamingException {
         return Persistence.createEntityManagerFactory("invisibleFriendAppPU");
     }
@@ -99,5 +107,24 @@ public class StartupListener implements ServletContextListener{
             throw new RuntimeException(ex);
         }
     }
-    
+
+    private String storePlayerProfilePhoto(ServletContext context, String photoName) {
+        try {
+            CloudStoragePlayerPhotoController photoController = new CloudStoragePlayerPhotoController();
+            InputStream input = context.getResourceAsStream("/photos/" + photoName);
+            if (input == null) {
+                Logger.getLogger(StartupListener.class.getName()).log(
+                        Level.INFO, "Message: {0}", "Something happens");
+            }
+
+            return photoController.saveFile(input, photoName);
+           
+        } catch (IOException ex) {
+            Logger.getLogger(StartupListener.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(StartupListener.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
 }

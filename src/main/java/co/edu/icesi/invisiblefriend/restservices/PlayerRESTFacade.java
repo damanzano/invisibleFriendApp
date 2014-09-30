@@ -127,7 +127,7 @@ public class PlayerRESTFacade {
         try {
 
             //return Response.status(200).entity(output).build();
-            String imageUrl = getCloudController().saveFile("ifa " + fileDetail.getFileName(), uploadedInputStream, fileDetail);
+            String imageUrl = getCloudController().saveFile(uploadedInputStream, fileDetail);
 
             try {
                 jsonObject.put("name", fileDetail.getFileName());
