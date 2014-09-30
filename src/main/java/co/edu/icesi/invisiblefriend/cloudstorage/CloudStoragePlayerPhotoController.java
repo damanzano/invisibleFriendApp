@@ -42,12 +42,12 @@ public class CloudStoragePlayerPhotoController {
      */
     private final GcsService gcsService
             = GcsServiceFactory.createGcsService(RetryParams.getDefaultInstance());
-    
+
     /**
      * This the app identify service
      */
     AppIdentityService appIdentityService = AppIdentityServiceFactory.getAppIdentityService();
-    
+
     /**
      * The image services
      */
@@ -62,25 +62,13 @@ public class CloudStoragePlayerPhotoController {
     public void saveFile(String imageTitle, InputStream uploadedInputStream, FormDataContentDisposition fileDetail) throws IOException, ClassNotFoundException {
 
         /**
-         * Write and read back a map
+         * Write and read back a object
          */
         GcsFilename filename = new GcsFilename(appIdentityService.getDefaultGcsBucketName(), fileDetail.getFileName());
-        Map<String, String> mapContent = new HashMap<>();
-        mapContent.put("foo", "bar");
 
-        writeObjectToFile(filename, mapContent);
+        writeImageToFile(filename, uploadedInputStream);
 
-        System.out.println("Wrote " + mapContent + " read: " + readObjectFromFile(filename));
-
-        /**
-         * Write and read back a byteArray
-         */
-        byte[] byteContent = new byte[]{1, 2, 3, 4, 5};
-
-        writeToFile(filename, byteContent);
-
-        System.out.println("Wrote " + Arrays.toString(byteContent) + " read: "
-                + Arrays.toString(readFromFile(filename)));
+        System.out.println("Wrote " + fileDetail.getFileName() + " read: " + readObjectFromFile(filename));
 
     }
 
@@ -114,7 +102,7 @@ public class CloudStoragePlayerPhotoController {
         GcsOutputChannel outputChannel
                 = gcsService.createOrReplace(fileName, GcsFileOptions.getDefaultInstance());
         copyStreams(content, Channels.newOutputStream(outputChannel));
-     }
+    }
 
     /**
      * Writes the byte array to the specified file. Note that the close at the

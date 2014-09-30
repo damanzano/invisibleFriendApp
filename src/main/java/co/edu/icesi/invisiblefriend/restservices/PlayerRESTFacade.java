@@ -11,6 +11,7 @@ import co.edu.icesi.invisiblefriend.entities.Player;
 import co.edu.icesi.invisiblefriend.login.LoginInfo;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
@@ -51,6 +52,10 @@ public class PlayerRESTFacade {
         }
     }
 
+    private CloudStoragePlayerPhotoController getCloudController() {
+        return new CloudStoragePlayerPhotoController();
+    }
+
     @GET
     @Produces({"application/json"})
     public List<Player> findAll() {
@@ -74,12 +79,12 @@ public class PlayerRESTFacade {
             return Response.notModified(ex.getMessage()).build();
         }
     }
-    
+
     @GET
     @Path("/login")
     @Produces({"application/json"})
     public LoginInfo Login() {
-            return getJpaController().verifyCredentials();
+        return getJpaController().verifyCredentials();
     }
 
     @PUT
@@ -110,7 +115,7 @@ public class PlayerRESTFacade {
     public String count() {
         return String.valueOf(getJpaController().getCount());
     }
-    
+
     @POST
     @Path("/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -118,19 +123,26 @@ public class PlayerRESTFacade {
     public JSONObject uploadFoto(
             @FormDataParam("files") InputStream uploadedInputStream,
             @FormDataParam("files") FormDataContentDisposition fileDetail) {
-
-        //return Response.status(200).entity(output).build();
-        
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("name", "Hello");
-            jsonObject.put("size", "0");
-            
-        } catch (JSONException ex) {
+
+            //return Response.status(200).entity(output).build();
+            getCloudController().saveFile("ifa " + fileDetail.getFileName(), uploadedInputStream, fileDetail);
+
+            try {
+                jsonObject.put("name", "Hello");
+                jsonObject.put("size", "1");
+
+            } catch (JSONException ex) {
+                Logger.getLogger(PlayerRESTFacade.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(PlayerRESTFacade.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(PlayerRESTFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
         return jsonObject;
-
     }
 
 }
