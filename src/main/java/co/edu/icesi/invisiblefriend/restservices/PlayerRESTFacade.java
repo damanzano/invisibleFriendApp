@@ -5,7 +5,7 @@
  */
 package co.edu.icesi.invisiblefriend.restservices;
 
-import co.edu.icesi.invisiblefriend.controllers.CloudStoragePlayerPhotoController;
+import co.edu.icesi.invisiblefriend.cloudstorage.CloudStoragePlayerPhotoController;
 import co.edu.icesi.invisiblefriend.controllers.PlayerJpaController;
 import co.edu.icesi.invisiblefriend.entities.Player;
 import co.edu.icesi.invisiblefriend.login.LoginInfo;
