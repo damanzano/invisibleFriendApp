@@ -122,13 +122,13 @@ public class PlayerRESTFacade {
         //return Response.status(200).entity(output).build();
         
         JSONObject jsonObject = new JSONObject();
-//        try {
-//            jsonObject.put("name", fileDetail.getFileName());
-//            jsonObject.put("size", fileDetail.getSize());
-//            
-//        } catch (JSONException ex) {
-//            Logger.getLogger(PlayerRESTFacade.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            jsonObject.put("name", "Hello");
+            jsonObject.put("size", "0");
+            
+        } catch (JSONException ex) {
+            Logger.getLogger(PlayerRESTFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return jsonObject;
 
     }

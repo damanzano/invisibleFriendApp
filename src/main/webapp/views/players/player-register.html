@@ -40,5 +40,14 @@
 
             <button type="submit" ng-click="createPlayer()" class="btn btn-primary">Register</button>
         </form>
+        
+        <form action="rest/players/upload" method="post" enctype="multipart/form-data">
+ 
+	   <p>
+		Select a file : <input type="file" name="file" />
+	   </p>
+ 
+	   <input type="submit" value="Upload It" />
+	</form>
     </section>
 </div>
